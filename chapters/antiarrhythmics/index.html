@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html lang="ka">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>არითმიების სამკურნალო მედიკამენტები — ინტერაქტიული ციფრული სახელმძღვანელო</title>
+<style>
+    :root{
+      --bg:#f5f7fb; --paper:#ffffff; --ink:#172033; --muted:#5b667a; --line:#dce3ef;
+      --accent:#0f766e; --accent-2:#1d4ed8; --danger:#b91c1c; --warning:#b45309; --ok:#15803d;
+      --soft:#eef7f6; --soft-blue:#edf4ff; --soft-red:#fff1f2; --soft-yellow:#fff7ed;
+      --shadow:0 14px 36px rgba(17,24,39,.10); --radius:18px;
+      --code:#0f172a;
+    }
+    [data-theme="dark"]{
+      --bg:#0b1220; --paper:#111827; --ink:#e5e7eb; --muted:#a8b3c7; --line:#243247;
+      --accent:#2dd4bf; --accent-2:#93c5fd; --danger:#fca5a5; --warning:#fdba74; --ok:#86efac;
+      --soft:#102a2a; --soft-blue:#101f3b; --soft-red:#35151a; --soft-yellow:#332411;
+      --shadow:0 14px 36px rgba(0,0,0,.35); --code:#e5e7eb;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Calibri, "Segoe UI", Arial, sans-serif;background:linear-gradient(135deg,var(--bg),#edf2ff);color:var(--ink);line-height:1.55}
+    a{color:var(--accent-2);text-decoration:none} a:hover{text-decoration:underline}
+    .app{display:grid;grid-template-columns:300px minmax(0,1fr);min-height:100vh}
+    aside{position:sticky;top:0;height:100vh;overflow:auto;background:rgba(255,255,255,.82);backdrop-filter:blur(14px);border-right:1px solid var(--line);padding:22px 18px;z-index:5}
+    [data-theme="dark"] aside{background:rgba(17,24,39,.86)}
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+    .logo{width:42px;height:42px;border-radius:14px;background:radial-gradient(circle at 30% 30%,#fff 0 10%,transparent 11%),linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
+    .brand h1{font-size:18px;line-height:1.08;margin:0}.brand small{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+    .tools{display:grid;gap:8px;margin:14px 0 18px}
+    .search{position:relative}.search input{width:100%;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:10px 13px 10px 36px;font-size:14px}.search span{position:absolute;left:13px;top:8px;color:var(--muted)}
+    button,.btn{border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);padding:9px 11px;font:inherit;cursor:pointer;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+    button:hover,.btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+    .btn.primary{background:var(--accent);color:white;border-color:var(--accent)}
+    nav a{display:block;padding:9px 10px;border-radius:10px;color:var(--ink);font-size:14px;margin:2px 0;border:1px solid transparent}
+    nav a.active, nav a:hover{background:var(--soft);border-color:rgba(15,118,110,.22);text-decoration:none}
+    main{padding:28px clamp(18px,4vw,52px) 80px;max-width:1280px;width:100%;margin:auto}
+    .hero{background:linear-gradient(135deg,rgba(15,118,110,.12),rgba(29,78,216,.12)),var(--paper);border:1px solid var(--line);border-radius:28px;padding:34px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+    .hero:after{content:"";position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(15,118,110,.22),transparent 70%)}
+    .eyebrow{letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;font-size:12px}.hero h2{font-size:clamp(32px,5vw,58px);line-height:1;margin:.2em 0}.hero p{max-width:900px;color:var(--muted);font-size:18px}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}.hero-card{background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:22px;padding:18px}[data-theme="dark"] .hero-card{background:rgba(17,24,39,.72)}
+    .section{margin-top:28px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}.section h2{margin:0 0 12px;font-size:28px}.section h3{margin:24px 0 10px;font-size:22px}.section h4{margin:18px 0 8px}.section p{margin:8px 0}.muted{color:var(--muted)}
+    .grid{display:grid;gap:16px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0)),var(--paper);border-radius:16px;padding:16px}.card h3,.card h4{margin-top:0}.callout{border-left:5px solid var(--accent);background:var(--soft);border-radius:14px;padding:14px 16px;margin:14px 0}.danger{border-left-color:var(--danger);background:var(--soft-red)}.warn{border-left-color:var(--warning);background:var(--soft-yellow)}.blue{border-left-color:var(--accent-2);background:var(--soft-blue)}
+    .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 9px;font-size:12px;color:var(--muted);margin:3px}.pill.ok{border-color:rgba(21,128,61,.3);color:var(--ok)}.pill.warn{border-color:rgba(180,83,9,.3);color:var(--warning);background:transparent}.pill.danger{border-color:rgba(185,28,28,.3);color:var(--danger);background:transparent}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:15px;margin:14px 0;background:var(--paper)}table{width:100%;border-collapse:separate;border-spacing:0;min-width:780px}th,td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th{position:sticky;top:0;background:var(--soft);z-index:1;color:var(--ink)}tr:last-child td{border-bottom:none}td:first-child,th:first-child{font-weight:700}.compact td,.compact th{padding:9px;font-size:14px}
+    details{border:1px solid var(--line);border-radius:15px;margin:10px 0;background:var(--paper);overflow:hidden}summary{padding:13px 15px;cursor:pointer;font-weight:700;background:linear-gradient(90deg,var(--soft),transparent)}details>div{padding:14px 16px}
+    .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.tab{border-radius:999px}.tab.active{background:var(--accent);color:white;border-color:var(--accent)}.tab-panel{display:none}.tab-panel.active{display:block}
+    .calc{display:grid;grid-template-columns:minmax(220px,370px) 1fr;gap:18px;align-items:start}.calc label{display:grid;gap:5px;margin:9px 0;color:var(--muted);font-size:14px}.calc input,.calc select,textarea{width:100%;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:11px;padding:10px;font:inherit}.result{border:1px solid var(--line);background:linear-gradient(180deg,var(--soft-blue),transparent),var(--paper);border-radius:16px;padding:16px;min-height:120px}.result strong{font-size:22px}.badge{display:inline-block;border-radius:999px;padding:4px 9px;font-weight:700;font-size:12px}.badge.ok{background:rgba(21,128,61,.14);color:var(--ok)}.badge.warn{background:rgba(180,83,9,.16);color:var(--warning)}.badge.danger{background:rgba(185,28,28,.14);color:var(--danger)}
+    .svgbox{background:linear-gradient(180deg,rgba(29,78,216,.07),rgba(15,118,110,.05));border:1px solid var(--line);border-radius:18px;padding:12px;overflow:hidden}.svgbox svg{width:100%;height:auto;display:block}.hotspot{cursor:pointer}.hotspot:hover{filter:drop-shadow(0 0 8px rgba(15,118,110,.45))}.caption{font-size:13px;color:var(--muted);margin-top:8px}.legend{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.legend span{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}.sw{width:14px;height:14px;border-radius:4px;display:inline-block;background:var(--accent)}
+    .flashcard{min-height:145px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:19px;font-weight:700;border:1px dashed var(--accent);border-radius:18px;background:var(--soft);padding:20px;cursor:pointer}.quiz-options{display:grid;gap:8px}.quiz-options button{text-align:left}.quiz-options button.correct{border-color:var(--ok);background:rgba(21,128,61,.10)}.quiz-options button.incorrect{border-color:var(--danger);background:rgba(185,28,28,.10)}
+    .mobile-menu{display:none;position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line);z-index:10;padding:10px 14px}.progress{height:7px;background:var(--line);border-radius:999px;overflow:hidden;margin:10px 0 4px}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+    .no-results{display:none;border:1px dashed var(--line);border-radius:14px;padding:16px;color:var(--muted);text-align:center}
+    .footnotes{font-size:14px;color:var(--muted)}.abbr{columns:2;column-gap:28px}.abbr div{break-inside:avoid;margin:5px 0}.kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:1px 6px}
+    @media (max-width:980px){.app{display:block}.mobile-menu{display:flex;justify-content:space-between;align-items:center}aside{position:fixed;transform:translateX(-105%);transition:.25s;box-shadow:var(--shadow);width:min(88vw,320px)}aside.open{transform:translateX(0)}main{padding:18px}.hero-grid,.grid.two,.grid.three,.grid.four,.calc{grid-template-columns:1fr}.hero{padding:24px}.abbr{columns:1}}
+    @media print{body{background:white}.app{display:block}aside,.mobile-menu,.tools,.tabs button,.no-print{display:none!important}main{max-width:none;padding:0}.section,.hero{box-shadow:none;border:1px solid #ddd;break-inside:avoid;margin:12px 0}.tab-panel{display:block!important}.result{border:1px solid #ddd}.table-wrap{overflow:visible}table{min-width:0;font-size:11px}th,td{padding:6px}.hero h2{font-size:30px}a{text-decoration:none;color:inherit}}
+  
+    .svgbox.ecg-small{max-width:840px;margin:12px auto;padding:10px;background:linear-gradient(180deg,rgba(29,78,216,.04),rgba(15,118,110,.035));}
+    .svgbox.ecg-small svg{max-height:280px;}
+</style>
+</head>
+<body>
+<div class="mobile-menu"><button id="openNav">☰ შინაარსი</button><button onclick="window.print()">ბეჭდვა</button></div>
+<div class="app">
+<aside id="sidebar">
+<div class="brand"><div aria-hidden="true" class="logo"></div><div><h1>ანტიარითმიული მედიკამენტები</h1><small>ციფრული სახელმძღვანელო სამედიცინო სტუდენტებისთვის</small></div></div>
+<div aria-label="კითხვის პროგრესი" class="progress"><div id="progressBar"></div></div>
+<div class="tools">
+<div class="search"><span>⌕</span><input aria-label="სახელმძღვანელოში ძიება" id="searchBox" placeholder="ძიება სახელმძღვანელოში…"/></div>
+<button id="themeToggle">მუქი რეჟიმის ჩართვა/გამორთვა</button>
+<button onclick="window.print()">ბეჭდვა / PDF-ად შენახვა</button>
+</div>
+<nav id="nav">
+<a href="#overview">1. მიმოხილვა</a>
+<a href="#classification">2. Vaughan Williams-ის კლასიფიკაცია</a>
+<a href="#electrophysiology">3. ელექტროფიზიოლოგიის საფუძვლები</a>
+<a href="#drug-table">4. მედიკამენტების ცხრილი</a>
+<a href="#class-i">5. I კლასი — ნატრიუმის არხების ბლოკერები</a>
+<a href="#class-ii">6. II კლასი — ბეტა-ბლოკერები</a>
+<a href="#class-iii">7. III კლასი — კალიუმის არხების ბლოკერები</a>
+<a href="#class-iv">8. IV კლასი — კალციუმის არხების ბლოკერები</a>
+<a href="#other-agents">9. ადენოზინი, დიგოქსინი, ივაბრადინი</a>
+<a href="#calculators">10. კალკულატორები</a>
+<a href="#case-lab">11. კლინიკური შემთხვევები და ქვიზები</a>
+<a href="#references">12. წყაროები და აბრევიატურები</a>
+</nav>
+</aside>
+<main>
+<section class="hero searchable" id="overview">
+<div class="hero-grid">
+<div>
+<div class="eyebrow">ციფრული სახელმძღვანელო სტუდენტებისთვის<br>ავტორი: პროფ. კახაბერ ჭელიძე, M.D., Ph.D. <br>რედაქტორი: ნათია ეფრემიძე, M.D.</br></div>
+<h2>არითმიების სამკურნალო მედიკამენტები</h2>
+<p>ინტერაქტიული სახელმძღვანელო აქცენტებით ანტიარითმული მედიკამენტების კლასიფიკაციაზე, ელექტროფიზიოლოგიურ ეფექტებზე, გვერდით მოვლენებზე, უკუჩვენებებსა და პრაქტიკულ კალკულაციებზე.</p>
+<div class="callout blue"><strong>სასწავლო დანიშნულება:</strong> ინტერაქციული ელექტრონული მოდული შექმნილია დიპლომამდელი განათლების მიზნით.</div>
+</div>
+<div class="hero-card">
+<h3>მკურნალობის ძირითადი პრინციპი</h3>
+<p>არითმიის მკურნალობის გადაწყვეტილება დამოკიდებულია სიმპტომებსა და ასოცირებულ რისკზე. მართვა, პირველ რიგში, მიმართულია არითმიის გამომწვევი მიზეზებისკენ. ანტიარითმიული თერაპია შეიძლება მოიცავდეს მედიკამენტებს, კარდიოვერსია-დეფიბრილაციას, გულშიდა მოწყობილობას (ICD), პეისმეკერს/გულის რესინქრონიზაციულ თერაპიას, კათეტერულ აბლაციას, ქირურგიას ან მათ კომბინაციას.</p>
+<div class="legend">
+<span><i class="sw" style="background:#0f766e"></i>გამტარობა</span>
+<span><i class="sw" style="background:#1d4ed8"></i>რეფრაქტერობა</span>
+<span><i class="sw" style="background:#b45309"></i>უსაფრთხოების სიგნალი</span>
+</div>
+</div>
+</div>
+</section>
+<div class="no-results" id="noResults">შესაბამისი სექცია ვერ მოიძებნა. სცადეთ სხვა საკვანძო სიტყვა, მაგალითად: „torsades“, „AV node“, „QRS“, „digoxin“ ან „flecainide“.</div>
+<section class="section searchable" id="classification">
+<h2>2. Vaughan Williams-ის კლასიფიკაცია</h2>
+<p>ანტიარითმიული მედიკამენტების უმეტესობა ჯგუფდება Vaughan Williams-ის ოთხ ძირითად კლასად, მათი დომინანტური უჯრედული ელექტროფიზიოლოგიური ეფექტის მიხედვით. შემდგომმა განახლებებმა მოიცვა ის პრეპარატებიც, რომლებიც თავდაპირველ არ შედიოდა სისტემაში (მაგ., დიგოქსინი, ადენოზინი და ივაბრადინი).</p>
+<div class="grid four">
+<div class="card"><h3>I კლასი</h3><p><strong>ნატრიუმის არხების ბლოკერები.</strong> ბლოკავენ ნატრიუმის სწრაფ არხებს და ანელებენ გამტარობას სწრაფარხიან ქსოვილებში: წინაგულებისა და პარკუჭების მუშა მიოციტებში და ჰის-პურკინიეს სისტემაში.</p><span class="pill">Ia / Ib / Ic</span><span class="pill warn">QRS/PR ცვლილებები</span></div>
+<div class="card"><h3>II კლასი</h3><p><strong>ბეტა-ბლოკერები.</strong> უმთავრესად მოქმედებენ ნელარხიან ქსოვილებზე, განსაკუთრებით სინოატრიულ (SA) და ატრიოვენტრიკულურ (AV) კვანძებზე: ამცირებენ ავტომატიზმს, ანელებენ გამტარობას და ახანგრძლივებენ რეფრაქტერობას.</p><span class="pill">SA კვანძი</span><span class="pill">AV კვანძი</span></div>
+<div class="card"><h3>III კლასი</h3><p><strong> უმთავრესად კალიუმის არხების ბლოკერები.</strong>ახანგრძლივებენ მოქმედების პოტენციალის ხანგრძლივობას და რეფრაქტერობას, როგორც ნელ-, ისე სწრაფარხიან ქსოვილებში.</p><span class="pill warn">QT გახანგრძლივება</span></div>
+<div class="card"><h3>IV კლასი</h3><p><strong>კალციუმის არხების არადიჰიდროპირიდინული ბლოკერები.</strong> თრგუნავენ კალციუმზე დამოკიდებულ მოქმედების პოტენციალებს ნელარხიან ქსოვილებში, ანელებენ გამტარობას ატრიოვენტრიკულურ კვანძში, ამცირებენ ავტომატიზმის სიხშირეს და ახანგრძლივებენ რეფრაქტერობას.</p><span class="pill">დილთიაზემი</span><span class="pill">ვერაპამილი</span></div>
+</div>
+<h3>კლასიფიკაციის ინტერაქციული რუკა</h3>
+<div class="svgbox">
+<svg aria-label="Vaughan Williams-ის ანტიარითმიული პრეპარატების კლასების რუკა" role="img" viewbox="0 0 1000 470">
+<defs>
+<lineargradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#0f766e"></stop><stop offset="1" stop-color="#1d4ed8"></stop></lineargradient>
+<filter height="140%" id="shadow" width="140%" x="-20%" y="-20%"><fedropshadow dx="0" dy="8" flood-opacity="0.18" stddeviation="7"></fedropshadow></filter>
+</defs>
+<rect fill="url(#g1)" height="450" opacity=".10" rx="28" width="980" x="10" y="10"></rect>
+<g filter="url(#shadow)">
+<rect class="hotspot" data-info="classI" fill="#ffffff" height="300" rx="22" stroke="#0f766e" stroke-width="3" width="200" x="60" y="80"></rect>
+<rect class="hotspot" data-info="classII" fill="#ffffff" height="300" rx="22" stroke="#1d4ed8" stroke-width="3" width="200" x="290" y="80"></rect>
+<rect class="hotspot" data-info="classIII" fill="#ffffff" height="300" rx="22" stroke="#b45309" stroke-width="3" width="200" x="520" y="80"></rect>
+<rect class="hotspot" data-info="classIV" fill="#ffffff" height="300" rx="22" stroke="#7c3aed" stroke-width="3" width="200" x="750" y="80"></rect>
+</g>
+<g font-family="Calibri, Arial" text-anchor="middle">
+<text fill="#0f172a" font-size="36" font-weight="700" x="160" y="125">I</text>
+<text fill="#0f172a" font-size="20" font-weight="700" x="160" y="165">Na⁺ არხი</text>
+<text fill="#475569" font-size="15" x="160" y="200">სწრაფარხიანი ქსოვილები</text>
+<text fill="#475569" font-size="15" x="160" y="232">გამტარობა ↓</text>
+<text fill="#475569" font-size="15" x="160" y="264">Ia: QT ↑</text>
+<text fill="#475569" font-size="15" x="160" y="296">Ib: მაღალი სიხშირე</text>
+<text fill="#475569" font-size="15" x="160" y="328">Ic: ყველა სიხშირე</text>
+<text fill="#0f172a" font-size="36" font-weight="700" x="390" y="125">II</text>
+<text fill="#0f172a" font-size="20" font-weight="700" x="390" y="165">β-ბლოკერები</text>
+<text fill="#475569" font-size="15" x="390" y="200">SA/AV კვანძები</text>
+<text fill="#475569" font-size="15" x="390" y="232">ავტომატიზმი ↓</text>
+<text fill="#475569" font-size="15" x="390" y="264">PR ↑</text>
+<text fill="#475569" font-size="15" x="390" y="296">AV გადაცემა ↓</text>
+<text fill="#0f172a" font-size="36" font-weight="700" x="620" y="125">III</text>
+<text fill="#0f172a" font-size="20" font-weight="700" x="620" y="165">K⁺ არხი</text>
+<text fill="#475569" font-size="15" x="620" y="200">რეპოლარიზაცია ↓</text>
+<text fill="#475569" font-size="15" x="620" y="232">APD ↑</text>
+<text fill="#475569" font-size="15" x="620" y="264">რეფრაქტერობა ↑</text>
+<text fill="#475569" font-size="15" x="620" y="296">QT ↑</text>
+<text fill="#0f172a" font-size="36" font-weight="700" x="850" y="125">IV</text>
+<text fill="#0f172a" font-size="20" font-weight="700" x="850" y="165">Ca²⁺ არხი</text>
+<text fill="#475569" font-size="15" x="850" y="200">ნელარხიანი ქსოვილები</text>
+<text fill="#475569" font-size="15" x="850" y="232">AV გამტარობა ↓</text>
+<text fill="#475569" font-size="15" x="850" y="264">PR ↑</text>
+<text fill="#475569" font-size="15" x="850" y="296">SVT / AF სიხშირე</text>
+</g>
+</svg>
+<div class="caption" id="classInfo">განმარტების გენერაციის მიზნით, დააწკაპუნეთ შესაბამისი კლასის ბარათზე.</div>
+</div>
+</section>
+<section class="section searchable" id="electrophysiology">
+<h2>3. ელექტროფიზიოლოგიის საფუძვლები</h2>
+<div class="grid">
+<div>
+<h3>სწრაფარხიანი და ნელარხიანი ქსოვილები</h3>
+<p><strong>სწრაფარხიანი ქსოვილები</strong> მოიცავს წინაგულების და პარკუჭების მუშა მიოციტებს და ჰის-პურკინიეს სისტემას. I კლასის პრეპარატები თავიანთ ეფექტს ახორციელებენ სწრაფი ნატრიუმის არხების ბლოკირებით.</p>
+<p><strong>ნელარხიანი ქსოვილები</strong> მოიცავს სინოატრიულ (SA) და ატრიოვენტრიკულურ (AV) კვანძებს. მათზე ზეემოქმედების თვალსაზრისით განსაკუთრებული მნიშვნელობა ენიჭება II და IV კლასის პრეპარატებს, ავტომატიზმის შემცირების, გამტარობის დაქვეთების და კვანძოვანი რეფრაქტერობის გახანგრძლივების ეფექტების გამო.</p>
+<div class="callout"><strong>კლინიკური მნიშვნელობა:</strong> ატრიოვენტრიკულურ (AV) კვანძზე დამოკიდებული ტაქიარითმიები შეიძლება დაემორჩილოს პრეპარატებს, რომლებიც ანელებენ ან ბლოკავენ AV-კვანძოვან გამტარობას. პარკუჭოვანი ტაქიარითმიების დროს პრეპარატის შერჩევა განსაკუთრებულ სიფრთხილეს მოითხოვს, პროარითმიისა და უარყოფითი ინოტროპული ეფექტის რისკების გამო.</div>
+</div>
+</div>
+<h3>ელექტროკარდიოგრაფიული ეფექტების რუკა</h3>
+<div class="svgbox ecg-small">
+<svg aria-label="ანტიარითმიული პრეპარატების ელექტროკარდიოგრაფიული ეფექტები" role="img" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" viewbox="0 0 920 280">
+<defs>
+<filter height="120%" id="ecgShadow" width="120%" x="-10%" y="-10%">
+<fedropshadow dx="0" dy="4" flood-opacity="0.12" stddeviation="4"></fedropshadow>
+</filter>
+<lineargradient id="ecgBg" x1="0" x2="1">
+<stop offset="0" stop-color="#ffffff"></stop>
+<stop offset="1" stop-color="#f8fafc"></stop>
+</lineargradient>
+</defs>
+<rect fill="url(#ecgBg)" filter="url(#ecgShadow)" height="256" rx="22" stroke="#cbd5e1" stroke-width="1.5" width="896" x="12" y="12"></rect>
+<g stroke="#e2e8f0" stroke-width="1">
+<path d="M40 80 H880 M40 130 H880 M40 180 H880 M40 230 H880"></path>
+<path d="M80 35 V245 M160 35 V245 M240 35 V245 M320 35 V245 M400 35 V245 M480 35 V245 M560 35 V245 M640 35 V245 M720 35 V245 M800 35 V245"></path>
+</g>
+<path d="M70 165 L145 165 C162 126 192 126 210 165 L292 165 L318 82 L342 228 L367 165 L468 165 C498 112 548 112 578 165 L720 165" fill="none" stroke="#0f172a" stroke-linecap="round" stroke-linejoin="round" stroke-width="5.2"></path>
+<g font-family="Calibri, Arial, sans-serif" font-size="17" font-weight="700">
+<line stroke="#0f766e" stroke-linecap="round" stroke-width="4.5" x1="145" x2="210" y1="210" y2="210"></line>
+<text fill="#0f766e" text-anchor="middle" x="177" y="236">P კბილი</text>
+<line stroke="#1d4ed8" stroke-linecap="round" stroke-width="4.5" x1="145" x2="318" y1="250" y2="250"></line>
+<text fill="#1d4ed8" font-size="15" text-anchor="middle" x="232" y="270">PR ↑: II/IV კლასი, დიგოქსინი</text>
+<line stroke="#b45309" stroke-linecap="round" stroke-width="4.5" x1="318" x2="367" y1="62" y2="62"></line>
+<text fill="#b45309" font-size="16" text-anchor="middle" x="342" y="49">QRS ↑: I კლასი</text>
+<line stroke="#b91c1c" stroke-linecap="round" stroke-width="4.5" x1="318" x2="578" y1="29" y2="29"></line>
+<text fill="#b91c1c" font-size="16" text-anchor="middle" x="448" y="24">QT ↑: Ia და III კლასი</text>
+<text fill="#475569" font-size="15" font-weight="500" x="735" y="169"></text>
+<text fill="#0f172a" font-size="18" x="60" y="52"></text>
+</g>
+</svg>
+<div class="caption"></div>
+</div>
+</section>
+<section class="section searchable" id="drug-table">
+<h2>4. ანტიარითმიული პრეპარატების ცხრილი</h2>
+<p>ქვემოთ მოცემული ცხრილი მასალას აჯგუფებს კლასის, წარმომადგენელი პრეპარატების, გამოყენების, არასასურველი ეფექტებისა და შენიშვნების მიხედვით. სექციების გასაფილტრად გამოიყენეთ მარცხენა პანელის ძიება, ხოლო ცხრილის დასაზუსტებლად — პრეპარატის ფილტრი.</p>
+<div class="grid two no-print">
+<label>პრეპარატის/კლასის ფილტრი<input id="drugFilter" placeholder="მაგ.,: torsades, ფლეკაინდი, AF, AV ბლოკი"/>
+</label>
+<label>კლასის ჩვენება<select id="classFilter">
+<option value="all">ყველა კლასი</option><option value="Ia">Ia კლასი</option><option value="Ib">Ib კლასი</option><option value="Ic">Ic კლასი</option><option value="II">II კლასი</option><option value="III">III კლასი</option><option value="IV">IV კლასი</option><option value="Other">სხვა ანტიარითმიული საშუალებები</option>
+</select>
+</label>
+</div>
+<div class="table-wrap"><table id="drugTable">
+<thead><tr><th>კლასი / პრეპარატი</th><th>ტიპური ჩვენება</th><th>ზოგიერთი გვერდითი ეფექტი</th><th>შენიშვნები / სიფრთხილის ზომები</th></tr></thead>
+<tbody>
+<tr data-class="Ia"><td>Ia კლასი: დიზოპირამიდი</td><td>წინაგულოვანი და პარკუჭოვანი ექსტრასისტოლების სუპრესია; სუპრავენტრიკულური ტაქიკარდიის (SVT) / პარკუჭოვანი ტაქიკარდიის (VT) სუპრესია; წინაგულთა ფიბრილაცია ან თრთოლვა; პარკუჭთა ფიბრილაციის სუპრესია</td><td>ანტიქოლინერგული ეფექტები, ჰიპოგლიკემია, torsades de pointes პარკუჭოვანი ტაქიკარდია, უარყოფითი ინოტროპული ეფექტი</td><td>გამოიყენეთ სიფრთხილით მარცხენა პარკუჭის დისფუნქციის ან თირკმლის უკმარისობის შემთხვევაში; არასასურველმა ეფექტებმა შეიძლება შეამციროს მკურნალობისადმი დამყოლობა; QRS-ის მნიშვნელოვანი გაფართოების შემთხვევაში შეამცირეთ ინფუზიის სიჩქარე/დოზა ან შეწყვიტეთ ინფუზია.</td></tr>
+<tr data-class="Ia"><td>Ia კლასი: პროკაინამიდი</td><td>წინაგულოვანი/პარკუჭოვანი ექსტრასისტოლების სუპრესია; სუპრავენტრიკული ტაქიკარდიის (SVT) / პარკუჭოვანი ტაქიკარდიის (VT) სუპრესია; წინაგულთა ფიბრილაცია ან თრთოლვა; პარკუჭოვანი ფიბრილაციის სუპრესია</td><td>ინტრავენური ინფუზიის შემთხვევაში ჰიპოტენზია, ANA-პოზიტიურობა ან მედიკამენტით ინდუცირებული ლუპუსი, აგრანულოციტოზი, torsades de pointes პარკუჭოვანი ტაქკიარდია</td><td>არსებობს გახანგრძლივებული გამოთავისუფლების ფორმები; QRS-ის მნიშვნელოვანი გაფართოების ან QTc-ის გახანგრძლივების შემთხვევაში შეამცირეთ ინფუზიის სიჩქარე/დოზა ან შეწყვიტეთ ინფუზია.</td></tr>
+<tr data-class="Ia"><td>Ia კლასი: ქინიდინი</td><td>წინაგულოვანი/პარკუჭოვანი ექსტრასისტოლების სუპრესია; სუპრავენტრიკული ტაქიკარდიის (SVT) / პარკუჭოვანი ტაქიკარდიის (VT) სუპრესია; წინაგულთა ფიბრილაცია ან თრთოლვა; პარკუჭოვანი ფიბრილაციის სუპრესია</td><td>გასტროინტესტინური სიმპტომები, თრომბოციტოპენია, ღვიძლის დისფუნქცია, torsades de pointes პარკუჭოვანი ტაქიკარდია</td><td>QRS-ის მნიშვნელოვანი გაფართოების ან QTc-ის გახანგრძლივების შემთხვევაში შეამცირეთ ინფუზიის სიჩქარე/დოზა ან შეწყვიტეთ ინფუზია.</td></tr>
+<tr data-class="Ib"><td>Ib კლასი: ლიდოკაინი</td><td>პარკუჭოვანი არითმიების სუპრესია: პარკუჭოვანი ექსტრასისტოლა, პარკუჭოვანი ტაქიკარდია, პარკუჭოვანი ფიბრილაცია</td><td>ტრემორი, კრუნჩხვები, ძილიანობა, დელირიუმი, პარესთეზიები სწრაფი შეყვანისას; მიოკარდიუმის ინფარქტის შემდგომ ბრადიარითმიების რისკი</td><td>შეამცირეთ დოზა პირველი 24 საათის შემდეგ.</td></tr>
+<tr data-class="Ib"><td>Ib კლასი: მექსილეტინი</td><td>პარკუჭოვანი არითმიების სუპრესია: პარკუჭოვანი ექსტრასისტოლა, პარკუჭოვანი ტაქიკარდია, პარკუჭოვანი ფიბრილაცია</td><td>გულისრევა, ღებინება, ტრემორი, კრუნჩხვები</td><td></td></tr>
+<tr data-class="Ic"><td>Ic კლასი: ფლეკაინიდი</td><td>წინაგულოვანი/პარკუჭოვანი ექსტრასისტოლების სუპრესია; სუპრავენტრიკული ტაქიკარდიის (SVT) / პარკუჭოვანი ტაქიკარდიის (VT) სუპრესია; წინაგულთა ფიბრილაცია ან თრთოლვა; პარკუჭოვანი ფიბრილაციის სუპრესია</td><td>ზოგჯერ — მხედველობის დაბინდვა და პარესთეზიები</td><td>გულის სტრუქტურული დაავადების თანაარსებობის შემთხვევაში პროარითმიულია; QRS-ის გაფართოების დროს შეამცირეთ დოზა ან შეწყვიტეთ.</td></tr>
+<tr data-class="Ic"><td>Ic კლასი: პროპაფენონი</td><td>წინაგულოვანი/პარკუჭოვანი ექსტრასისტოლების სუპრესია; სუპრავენტრიკული ტაქიკარდიის (SVT) / პარკუჭოვანი ტაქიკარდიის (VT) სუპრესია, წინაგულთა ფიბრილაცია ან თრთოლვა; პარკუჭოვანი ფიბრილაციის სუპრესია</td><td>ბეტა-ბლოკადა, სასუნთქი გზების რეაქტიული დაავადების შესაძლო გაუარესება, გასტროინტესტინური დისკომფორტი</td><td>არახაზოვანი ფარმაკოკინეტიკა; დოზის ზრდა არ უნდა აღემატებოდეს წინა დოზის 50%-ს.</td></tr>
+<tr data-class="II"><td>II კლასი: აცებუტოლოლი, ატენოლოლი, ბეტაქსოლოლი, ბისოპროლოლი, კარვედილოლი, ესმოლოლი, მეტოპროლოლი, ნადოლოლი, პროპრანოლოლი, თიმოლოლი</td><td>სუპრავენტრიკულური ტაქიარითმიები: წინაგულოვანი ექსტრასისტოლები, სინუსური ტაქიკარდია, სუპრავენტრიკულური ტაქიკარდია, წინაგულთა ფიბრილაცია, წინაგულთა თრთოლვა; პარკუჭოვანი არითმიების დროს გამოიყენება, როგორც დამხმარე საშუალება</td><td>გასტროინტესტინური დარღვევები, უძილობა, კოშმარები, ლეთარგია, ერექციული დისფუნქცია, AV კვანძის დისფუნქცია (შესაძლო AV ბლოკადა); სასუნთქი გზების რეაქტიული დაავადების გამწვავება, განსაკუთრებით არასელექტიური აგენტებით</td><td>შედარებით უკუნაჩვენებია ბრონქოსპაზმის დროს.</td></tr>
+<tr data-class="III"><td>III კლასი: ამიოდარონი‡</td><td>ნებისმიერი ტაქიარითმია, გარდა torsades de pointes პარკუჭოვანი ტაქიკარდიისა</td><td>პულმონური ტოქსიკურობა, QTc-ის გახანგრძლივება, torsades de pointes პარკუჭოვანი ტაქიკარდია, ბრადიკარდია, კანის ფერის შეცვლა, ღვიძლის დისფუნქცია, პერიფერიული ნეიროპათია, რქოვანას მიკროდეპოზიტები, ფარისებრი ჯირკვლის დისფუნქცია, შრატის კრეატინინის მატება</td><td>ასევე აქვს ბეტა-ბლოკირების, კალციუმის არხების ბლოკირების და ნატრიუმის არხების ბლოკირების ეფექტები; მოქმედები გვიანი დასაწყისი. ინტრავენური ფორმა შეიძლება გამოყენებულ იქნას რიტმის კონვერსიის მიზნით.</td></tr>
+<tr data-class="III"><td>III კლასი: აზიმილიდი</td><td>ნებისმიერი ტაქიარითმია, გარდა torsades de pointes პარკუჭოვანი ტაქიკარდიისა</td><td>torsades de pointes აპრკუჭოვანი ტაქიკარდია</td><td></td></tr>
+<tr data-class="III"><td>III კლასი: ბრეტილიუმი</td><td>პოტენციურად ლეტალური, რეფრაქტორული პარკუჭოვანი ტაქიარითმიები: ინტრაქტაბელური პარკუჭოვანი ტაქიკარდია, განმეორებითი პარკუჭოვანი ფიბრილაცია</td><td>ჰიპოტენზია</td><td>ასევე აქვს II კლასის თვისებები.</td></tr>
+<tr data-class="III"><td>III კლასი: დოფეტილიდი</td><td>ნებისმიერი ტაქიარითმია,  გარდა torsades de pointes პარკუჭოვანი ტაქიკარდიისა</td><td>torsades de pointes პარკუჭოვანი ტაქიკარდია</td><td>უკუნაჩვენებია QTc-ის გახანგრძლივების ან GFR-ის დაქვეითების შემთხვევაში.</td></tr>
+<tr data-class="III"><td>III კლასი: დრონედარონი</td><td>ნებისმიერი ტაქიარითმია, გარდა torsades de pointes პარკუჭოვანი ტაქიკარდიისა</td><td>QTc-ის გახანგრძლივება, torsades de pointes პარკუჭოვანი ტაქიკარდია, ბრადიკარდია, გასტროინტესტინური დისკომფორტი, ჰეპატოტოქსიკურობა, შრატის კრეატინინის მატება</td><td>ამიოდარონის მოდიფიცირებული მოლეკულაა; აქვს ნახევარდაშლის უფრო მოკლე პერიოდი, განაწილების მცირე მოცულობა, ნაკლები არასასურველი ეფექტი და უფრო სუსტი ეფექტურობა. არ გამოიყენება გულის უკმარისობის ან მუდმივი წინაგულთა  ანამნეზის შემთხვევაში.</td></tr>
+<tr data-class="III"><td>III კლასი: იბუტილიდი</td><td>წინაგულთა ფიბრილაციის და თრთოლვის შეწყვეტა</td><td>torsades de pointes პარკუჭოვანი ტაქიკარდია</td><td>გამოიყენება წინაგულთა ფიბრილაციის და თრთოლვის კუპირებისთვის.</td></tr>
+<tr data-class="III"><td>III კლასი: სოტალოლი</td><td>ნებისმიერი ტაქიარითმია, გარდა torsades de pointes პარკუჭოვანი ტაქიკარდიისა</td><td>II კლასის მსგავსი ეფექტები; მარცხენა პარკუჭის კუმშვადობის შესაძლო დაქვეითება; torsades de pointes პარკუჭოვანი ტაქიკარდია</td><td>ასევე აქვთ ბეტა-ბლოკირების აქტივობა; არ გამოიყენოთ თირკმლის დისფუნქციის შემთხვევაში.</td></tr>
+<tr data-class="III"><td>III კლასი: ვერნაკალანტი</td><td>წინაგულთა ახლად განვითარებული ფიბრილაციის კუპირება</td><td>ჰიპოტენზია, განსაკუთრებით გულის უკმარისობის დროს; ბრადიარითმიები, განსაკუთრებით ბეტა-ბლოკერის კოადმინისტრაციის შემთხვევაში</td><td></td></tr>
+<tr data-class="IV"><td>IV კლასი: დილთიაზემი</td><td>სუპრავენტრიკულური არითმიის კუპირება; მაღალი სიხშირის წინაგულთა ფიბრილაციის ან თრთოლვის შენელება</td><td>პარკუჭოვანი ტაქიკარდიის მქონე პაციენტებში შეიძლება გამოიწვიოს პარკუჭთა ფიბრილაცია. ახასიათებს უარყოფითი ინოტროპული ეფექტი.</td><td>ინტრავენური ფორმა გამოიყენება წინაგულთა ფიბრილიაციის ან წინაგულთა თრთოლვის დროს პარკუჭოვანი პასუხის სიხშირის დასაქვეითებლად.</td></tr>
+<tr data-class="IV"><td>IV კლასი: ვერაპამილი</td><td>სუპრავენტრიკულური არითმიის კუპირება; მაღალი სიხშირის წინაგულთა ფიბრილაციის ან თრთოლვის შენელება. შესაძლებელია ეფექტური იყოს ფასციკულური პარკუჭოვანი ტაქიკარდიის ერთ-ერთი ფორმის დროს</td><td>პარკუჭოვანი ტაქიკარდიის შემთხვევაში შეიძლება გამოიწვიოს პარკუჭთა ფიბრილაცია</td><td>ინტრავენური ფორმა გამოიყენება AV-კვანძოვანი ვიწრო-კომპლექსიანი ტაქიკარდიების კუპირებისთვის.</td></tr>
+<tr data-class="Other"><td>სხვა: ადენოზინი</td><td>გამოიყენება AV-კვანძოვან გამტარებლობაზე დამოკიდებული ტაქიარითმიების კუპირებისთვის</td><td>ქოშინი, დისკომფორტი გულმკერდში, წამოწითლება, ბრონქოსპაზმი</td><td>ანელებს ან ბლოკავს AV-კვანძოვან გამტარობას; აქვს უკიდურესად მოკლე მოქმედების ხანგრძლივობა; უკუჩვენებებია ასთმის და მაღალი ხარისხის გულის ბლოკადის შემთხვევაში; დიპირიდამოლი აძლიერებს ადენოზინის ეფექტებს.</td></tr>
+<tr data-class="Other"><td>სხვა: დიგოქსინი</td><td>გარკვეული სუპრავენტრიკულური არითმიების დროს AV-კვანძოვანი გამტარებლობის დაქვეითება</td><td>გასტროინტესტინური სიმპტომები; არითმიები (მათ შორის პარკუჭოვანი ექსტრასისტოლია, პარკუჭოვანი ტაქიკარდია, წინაგულოვანის ექსტრასისტოლია, წინაგულოვანი ტაქიკარდია, II ან III ხარისხის AV ბლოკადა ან მათი კომბინაციები</td><td>ამცირებს წინაგულების და პარკუჭების რეფრაქტორულ პერიოდებს; ვაგოტონურია და ახანგრძლივებს AV-კვანძოვან გამტარებლობას/რეფრაქტერობას; უკუნაჩვენებია მანიფესტირებული WPW-ის დროს.</td></tr>
+<tr data-class="Other"><td>სხვა: ივაბრადინი</td><td>სინოატრიული კვანძის სიხშირის დაქვეითება</td><td></td><td>თრგუნავს სინოატრიული (SA) კვანძის funny current, როს ხარჯზეც ქვეითდება სიხშირე.</td></tr>
+</tbody>
+</table></div>
+<div class="footnotes">† მოსალოდნელია QRS-ის გახანგრძლივება; შეწყვეტა/შეცვლა საჭიროა გამოხატული პროლონგაციის შემთხვევაში. ‡ ამიოდარონის დოზირება მნიშვნელოვნად განსხვავდება ასაკის და ჩვენების მიხედვით.</div>
+</section>
+<section class="section searchable" id="class-i">
+<h2>5. I კლასის ანტიარითმიული პრეპარატები: ნატრიუმის არხების ბლოკერები</h2>
+<p>I კლასის პრეპარატები ბლოკავენ ნატრიუმის სწრაფ არხებს და ანელებენ გამტარობას სწრაფარხიან ქსოვილებში. ECG-ზე ეს შეიძლება გამოვლინდეს P კბილის ან QRS კომპლექსის გაფართოება, PR ინტერვალის გახანგრძლივება ან მათი კომბინაცია.</p>
+<div class="grid three">
+<div class="card"><h3>Ia კლასი</h3><p><strong>შუალედური კინეტიკა.</strong> ნორმალური სიხშირის შემთხვევაში შესაძლებელია გამოჩნდეს გამტარობის დაქვეითება. ბლოკავს კალიუმის არხების რეპოლარიზაციას,  ახანგრძლივებს სწრაფარხიანი ქსოვილების რეფრაქტერულ პერიოდს და QT ინტერვალს.</p><span class="pill warn">QT ↑</span><span class="pill danger">torsades რისკი</span></div>
+<div class="card"><h3>Ib კლასი</h3><p><strong>სწრაფი კინეტიკა.</strong> ეფექტები ძირითადად ვლინდება გულისცემის მაღალი სიხშირეზე. მინიმალური ეფექტი წინაგულოვან ქსოვილზე. არ ახასიათებს კალიუმის არხების პირდაპირი ბლოკადა.</p><span class="pill">ფოკუსირება პარკუჭზე</span><span class="pill">მაღალი სიხშირე</span></div>
+<div class="card"><h3>Ic კლასი</h3><p><strong>ნელი კინეტიკა.</strong> ეფექტები ვლინდება ყველა სიხშირეზე. Ib კლასზე უფრო მძლავრი პოტენციალი; სწრაფარხიანი გამტარებლობის დაქვეითება შეიძლება გამოჩნდეს ნორმალური რიტმის დროსაც.</p><span class="pill warn">QRS-ის გაფართოება</span><span class="pill danger">სიფრთხილე გულის სტრუქტურული დაავადების დროს</span></div>
+</div>
+<div aria-label="I კლასის ჩანართები" class="tabs" role="tablist">
+<button class="tab active" data-tab="ia">Ia კლასი</button><button class="tab" data-tab="ib">Ib კლასი</button><button class="tab" data-tab="ic">Ic კლასი</button>
+</div>
+<div class="tab-panel active" id="ia">
+<h3>Ia კლასი: შუალედური კინეტიკა, ნატრიუმის და კალიუმის არხების ბლოკადა</h3>
+<p>ძირითადი ჩვენებებია სუპრავენტრიკულური ტაქიარითმიები, როგორიცაა წინაგულთა ფიბრილაცია, წინაგულთა თრთოლვა და წინაგულოვანი ტაქიკარდია; პარკუჭოვანი ტაქიარითმიები, როგორიცაა პარკუჭოვანი ტაქიკარდია და პარკუჭების ფიბრილაცია; აგრეთვე წინაგულოვანი ან პარკუჭოვანი ექსტრასისტოლების სუპრესია.</p>
+<div class="callout warn"><strong>უსაფრთხოების აქცენტები:</strong> Ia კლასის პრეპარატებმა შეიძლება გამოიწვიოს torsades de pointes პარკუჭოვანი ტაქიკარდია და ისე შეანელოს წინაგულოვანი ტაქიარითმია, რომ შესაძლებელი გახდეს 1:1 AV გამტარობა და განვითარდეს პარკუჭოვანი პასუხი, მკვეთრი აჩქარებით.</div>
+</div>
+<div class="tab-panel" id="ib">
+<h3>Ib კლასი: სწრაფი კინეტიკა და პარკუჭოვანი აქცენტი</h3>
+<p>Ib კლასის პრეპარატების ელექტროფიზიოლოგიური ეფექტები ძირითადად ვლინდება გულისცემის მაღალ სიხშირეზე. გამოიყენება პარკუჭოვანი ტაქიარითმიების და პარკუჭოვანი ექსტრასისტოლების სუპრესიისთვის.</p>
+</div>
+<div class="tab-panel" id="ic">
+<h3>Ic კლასი: ნელი კინეტიკა და გამტარობის ძლიერი შენელება</h3>
+<p>Ic კლასის პრეპარატები გამოიყენება წინაგულთა ფიბრილაციის, წინაგულთა თრთოლვის, წინაგულოვანი ექსტრასისტოლების, სუპრავენტრიკულური ტაქიკარდიის, პარკუჭთა ფიბრილაციის, პარკუჭოვანი ექსტრასისტოლების და პარკუჭოვანი ტაქიკარდიების სუპრესიისთვის.</p>
+<div class="callout danger"><strong>უსაფრთხოების აქცენტები:</strong>გულის სტრუქტურული დაავადების შემთხვევაში შესაძლებელია პროარითმული ეფექტის გამოვლინება. შესაძლებელია წინაგულოვანი ტაქიარითმიების დაქვეითება 1:1 AV გამტარობამდე.</div>
+</div>
+</section>
+<section class="section searchable" id="class-ii">
+<h2>6. II კლასის ანტიარითმიული პრეპარატები: ბეტა-ბლოკერები</h2>
+<div class="grid">
+<div>
+<p>ბეტა-ბლოკერები უმთავრესად მოქმედებენ ნელარხიან ქსოვილებზე: სინოატრიულ და ატრიოვენტრიკულურ კვანძებზე. ისინი ამცირებენ ავტომატიზმს, ანელებენ გამტარობის სიჩქარეს და ახანგრძლივებენ რეფრაქტერობას. ქვეითდება გულისცემის სიხშირე, ხანგრძლივდება PR ინტერვალი, რის ფონზეც AV კვანძი უფრო დაბალი სიხშირით ატარებს წინაგულოვან დეპოლარიზაციებს.</p>
+<p>ძირითადად გამოიყენება სუპრავენტრიკულური ტაქიკარდიების, მათ შორის სინუსური ტაქიკარდიის, წინაგულთა ფიბრილაციის ან თრთოლვის დროს, პარკუჭოვანი პასუხის დასაქვეითებლად. პარკუჭოვანი არითმიების მართვაში შეიძლება ჰქონდეს დამხმარე როლი  - პარკუჭთა ფიბრილაციის ზღურბლის გაზრდით და β-ადრენორეცეპტორებით გაშუალებული პარკუჭოვანი პროარითმიის დაქვეითებით.</p>
+<div class="callout warn"><strong>სიფრთხილე:</strong> ახასიათებს კარგი ამტანობა, თუმცა შეიძლება განვითარდეს მოდუნება, ძილის დარღვევა და გასტროინტესტინური დისკომფორტი. ბეტა-ბლოკერები (განსაკუთრებით, არასელექციური) უკუნაჩვენებია ასთმის მქონე პაციენტებში.</div>
+</div>
+</div>
+</section>
+<section class="section searchable" id="class-iii">
+<h2>7. III კლასის ანტიარითმიული პრეპარატები: უპირატესად კალიუმის არხების ბლოკერები</h2>
+<p>III კლასის პრეპარატები ახანგრძლივებენ მოქმედების პოტენციალს და რეფრაქტერობას ნელ- და სწრაფარხიან ქსოვილებში. შედეგად ქვეითდება მაღალი სიხშირის იმპულსების გატარების უნარი, გატარების სიჩქარის მნიშვნელოვანი ცვლილების გარეშე. დომინანტური ელექტროკარდიოგრაფიული ცვლილება არის QT ინტერვალის გახანგრძლივება.</p>
+<div class="callout danger"><strong>მთავარი საფრთხე:</strong>III კლასის პრეპარატებს აქვთ პარკუჭოვანი პროარითმიის (განსაკუთრებით torsades de pointes პარკუჭოვანი ტაქიკარდიის) რისკი.</div>
+<div class="grid two">
+<div class="card"><h3>ამიოდარონი როგორც ჰიბრიდული აგენტი</h3><p> III კლასის აქტივობასთან ერთად ამიოდარონს აქვს არაკონკურენტული ბეტა-ბლოკირების, კალციუმის და ნატრიუმის არხების ბლოკირების ეფექტებიც. მოქმედების დაწყება დაყოვნებულია. ნაკლებია torsades de pointes განვითარების სიხშირე.</p></div>
+<div class="card"><h3>თირკმლის/QT სიფრთხილის აგენტები</h3><p>დოფეტილიდი უკუნაჩვენებია QTc-ის გახანგრძლივების ან GFR-ის დაქვეითების შემთხვევაში. სოტალოლს აქვს ბეტა-ბლოკირების ეფექტი და არ გამოიყენება თირკმლის დისფუნქციის შემთხვევაში.</p></div>
+</div>
+</section>
+<section class="section searchable" id="class-iv">
+<h2>8. IV კლასის ანტიარითმიული პრეპარატები: კალციუმის არხების არადიჰიდროპირიდინული ბლოკერები</h2>
+<p>დილთიაზემი და ვერაპამილი ნელარხიან ქსოვილებში თრგუნავენ კალციუმზე დამოკიდებულ მოქმედების პოტენციალებს. ისინი ამცირებენ ავტომატიზმს, ანელებენ გამტარობის სიჩქარეს, ახანგრძლივებენ რეფრაქტერობას, ანელებენ გულისცემას, ახანგრძლივებენ PR ინტერვალს და ამცირებენ სწრაფი წინაგულოვანი დეპოლარიზაციების AV კვანძში გატარებს.</p>
+<div class="grid two">
+<div class="card"><h3>ძირითადი გამოყენება</h3><p>სუპრავენტრიკულური ტაქიკარდიის კუპირება და წინაგულთა ტაქისისტოლური ფიბრილაციის ან თრთოლვის შენელება. ვერაპამილით შეიძლება მარცხენა სეპტალური, Belhassen-ის ან ფასციკულური პარკუჭოვანი ტაქიკარდიის მართვა.</p></div>
+<div class="card"><h3>უსაფრთხოების აქცენტი</h3><p>პარკუჭოვანი ტაქიკარდიის შემთხვევაში დილთიაზემმა და ვერაპამილმა შეიძლება გამოიწვიოს პარკუჭთა ფიბრილაცია. მათ, ასევე, აქვთ უარყოფითი ინოტროპული ეფექტი.</p></div>
+</div>
+</section>
+<section class="section searchable" id="other-agents">
+<h2>9. Vaughan Williams-ის თავდაპირველი სისტემის მიღმა არსებული სხვა ანტიარითმიული საშუალებები</h2>
+<div class="grid three">
+<div class="card"><h3>ადენოზინი</h3><p>ანელებს ან ბლოკავს AV-კვანძოვან გამტარობას და შეუძლია შეწყვიტოს AV-კვანძოვან გამტარობაზე დამოკიდებული ტაქიარითმიები. აქვს უკიდურესად ხანმოკლე მოქმედება.</p><span class="pill danger">სიფრთხილით გამოიყენება ასთმის შემთხვევაში</span><span class="pill">უკუჩვენება: გულის მაღალი ხარისხის ბლოკადა</span></div>
+<div class="card"><h3>დიგოქსინი</h3><p>ამოკლებს წინაგულების და პარკუჭების რეფრაქტერობის პერიოდს და ვაგოტონური ზემოქმედებით ახანგრძლივებს AV-კვანძოვან გამტარობას და რეფრაქტერობის პერიოდებს.</p><span class="pill danger">უკუჩვენება: მანიფესტირებული WPW სინდრომი</span></div>
+<div class="card"><h3>ივაბრადინი</h3><p>თრგუნავს სინოატრიული კვანძის funny current-ს და ანელებს მის სიხშირეს.</p><span class="pill">ფოკუსირება სინოატრიულ კვანძზე</span></div>
+</div>
+<div class="callout danger"><strong>დიგოქსინი და პრეაგზენა:</strong> დიგოქსინი უკუნაჩვენებია მანიფესტირებული Wolff–Parkinson–White სინდრომის შემთხვევაში, დამატებითი გზის რეფრაქტორული პერიოდის შემოკლების უნარის გამო; ასეთ შემთხვევაში წინაგულთა ფიბრილაციამ შეიძლება გამოიწვიოს სიცოცხლისთვის საშიში გახშირებული პარკუჭოვანი პასუხი.</div>
+</section>
+<section class="section searchable" id="calculators">
+<h2>10. კალკულატორები და უსაფრთხოების ინტერაქტიული ინსტრუმენტები</h2>
+<p>ქვემოთ წარმოდგენილი კალულატორები სასწავლო დანიშნულებისაა! </p>
+<details open=""><summary>კალკულატორი A — QTc კალკულატორი და QT-პროლონგატორების უსაფრთხოების ინდიკატორი</summary><div class="calc">
+<div>
+<label>გაზომილი QT ინტერვალი, ms<input id="qt" max="800" min="120" type="number" value="420"/></label>
+<label>გულისცემის სიხშირე, bpm<input id="hr" max="240" min="20" type="number" value="72"/></label>
+<label>საფრთხის ზღურბლი, მწმ<input id="qtThreshold" max="700" min="350" type="number" value="500"/></label>
+<button class="primary" onclick="calcQTc()">QTc-ის გამოთვლა</button>
+</div>
+<div class="result" id="qtcResult">შეიყვანეთ QT და გულისცემის სიხშირე და შემდეგ გამოთვალეთ.</div>
+</div></details>
+<details><summary>კალკულატორი B — QRS-ის პროლონგაციის პროცენტი I კლასის მედიკამენტების მონიტორინგისთვის</summary><div class="calc">
+<div>
+<label>საწყისი QRS ხანგრძლივობა, ms<input id="qrsBase" max="250" min="40" type="number" value="90"/></label>
+<label>მიმდინარე QRS ხანგრძლივობა, ms<input id="qrsNow" max="300" min="40" type="number" value="116"/></label>
+<label>მნიშვნელოვანი გაფართოების ზღურბლი, %<input id="qrsLimit" max="100" min="1" type="number" value="25"/></label>
+<button class="primary" onclick="calcQRS()">QRS ცვლილების ანალიზი</button>
+</div>
+<div class="result" id="qrsResult">გამოიყენება I კლასის პრეპარატებთან, სადაც მოსალოდნელია QRS-ის გაფართოება. მნიშვნელოვანი გაფართოება საჭიროებს განმეორებით შეფასებას!</div>
+</div></details>
+<details><summary>კალკულატორი C — კრეატინინის კლირენსის შეფასება თირკმლის სიფრთხილის მქონე პრეპარატებისთვის</summary><div class="calc">
+<div>
+<label>ასაკი, წელი<input id="age" max="110" min="18" type="number" value="65"/></label>
+<label>წონა, კგ<input id="weight" max="250" min="30" type="number" value="75"/></label>
+<label>სქესი<select id="sex"><option value="male">კაცი</option><option value="female">ქალი</option></select></label>
+<label>შრატის კრეატინინი<input id="scr" max="15" min="0.2" step="0.01" type="number" value="1.2"/></label>
+<label>ერთეული<select id="scrUnit"><option value="mgdl">მგ/დლ</option><option value="umol">მკმოლ/ლ</option></select></label>
+<button class="primary" onclick="calcCrCl()">CrCl-ის შეფასება</button>
+</div>
+<div class="result" id="crclResult">წყაროს III კლასის მაგალითები: დოფეტილიდი უკუნაჩვენებია GFR-ის დაქვეითების შემთხვევაშუ; თირკმლების უკმარისობის შემთხვევაში უნდა მოერიდოთ სოტალოლს.</div>
+</div></details>
+<details><summary>კალკულატორი D — არითმიის და ანტიარითმული კლასის შესაბამისობის ასისტენტი</summary><div class="calc">
+<div>
+<label>რითმის დომინანტური პრობლემა<select id="rhythmType">
+<option value="avnode">AV-კვანძზე დამოკიდებული ვიწროკომპლექსიანი სუპრავენტრიკულური ტაქიკარდია (SVT)</option>
+<option value="afrate">წინაგულთა ტაქისისტოლური ფიბრილაცია / წინაგულთა ტაქისისტოლური თრთოლვა, პარკუჭოვანი სიხშირის დაქვეითების საჭიროებით</option>
+<option value="ventricular">პარკუჭოვანი ტაქიარითმიის სუპრესია</option>
+<option value="wpwaf">წინაგულთა ფიბრილაცია მანიფესტირებული WPW სინდრომით / პრეაგზნებით</option>
+<option value="torsades">torsades de pointes პარკუჭოვანი ტაქიკარდია</option>
+<option value="structural">ტაქიარითმია გულის სტრუქტურული დაავადების ეჭვით/რისკით</option>
+</select>
+</label>
+<button class="primary" onclick="matchClass()">კლასის ლოგიკის ჩვენება</button>
+</div>
+<div class="result" id="matchResult">აირჩიეთ რიტმის დომინანტური პრობლემა.</div>
+</div></details>
+</section>
+<section class="section searchable" id="case-lab">
+<h2>11. კლინიკური შემთხვევების ლაბორატორია და ქვიზები</h2>
+<div class="grid two">
+<div class="card">
+<h3>ფლეშბარათები</h3>
+<div class="flashcard" id="flashcard" onclick="flipCard()">დასაწყებად დააწკაპუნეთ.</div>
+<div style="margin-top:12px"><button onclick="nextCard()">შემდეგი ბარათი</button></div>
+</div>
+<div class="card">
+<h3>ქვიზი</h3>
+<p id="quizQ"><strong>კითხვა:</strong>რომელი კლასი ახანგრძლივებს მოქმედების პოტენციალის ხანგრძლივობასა და რეფრაქტერობას კალიუმის არხების ბლოკადით?</p>
+<div class="quiz-options" id="quizOptions"></div>
+<p class="muted" id="quizFeedback"></p>
+<button onclick="newQuiz()">ახალი კითხვა</button>
+</div>
+</div>
+<h3>მინი- სცენარები</h3>
+<details><summary>შემთხვევა 1 — ვიწროკომპლექსიანი ტაქიკარდია AV კვანძის მონაწილეობით</summary><div><p>ადენოზინს შეუძლია შეწყვიტოს AV-კვანძოვან გამტარობაზე დამოკიდებული ტაქიარითმიები. IV კლასის პრეპარატებს შეუძლიათ AV კვანძის მონაწილეობით მიმდინარე ვიწროკომპლექსიანი ტაქიკარდიების კუპირება, ხოლო ბეტა-ბლოკერები ანელებენ AV-კვანძოვან გამტარობას. ყოველთვის გადაამოწმეთ უკუჩვენებები, მაგალითად ადენოზინის შემთხვევაში - ასთმა/მაღალი ხარისხის ბლოკადა.</p></div></details>
+<details><summary>შემთხვევა 2 — წინაგულთა ფიბრილაცია მანიფესტირებული WPW სინდრომის შემთხვევაში</summary><div><p>დიგოქსინი უკუნაჩვენებია, რადგან ამოკლებს დამატებითი გზის რეფრაქტერულ პერიოდს. წინაგულთა ფიბრილაციის შემთხვევაში შეიძლება განვითარდეს სიცოცხლისთვის საშიში სწრაფი პარკუჭოვანი პასუხი.</p></div></details>
+<details><summary>შემთხვევა 3 — პარკუჭოვანი არითმია გულის სტრუქტურული დაავადების ფონზე</summary><div><p>I კლასის პრეპარატებმა შეიძლება გააუარესოს პარკუჭოვანი ტაქიკარდია და დათრგუნოს პარკუჭების კუმშვადობა. ეს არასასურველი ეფექტები უფრო მოსალოდნელია გულის სტრუქტურული დაავადების შემთხვევაში; I კლასის პრეპარატები, ჩვეულებრივ, გამოიყენება მხოლოდ მაშინ, როცა არ არის გულის სტრუქტურული დაავადება არ არსებობს ან არ არსებობს სხვა თერაპიული ალტერნატივა.</p></div></details>
+</section>
+<section class="section searchable" id="references">
+<h2>12. წყაროები და აბრევიატურები</h2>
+<h3>მოცემულ მასალაში შეტანილი წყაროები</h3>
+<ol>
+<li>Brugada J, Katritsis DG, Arbelo E, et al. 2019 ESC Guidelines for the management of patients with supraventricular tachycardia. <em>European Heart Journal</em>. 2020;41(5):655–720. doi:10.1093/eurheartj/ehz467.</li>
+<li>Al-Khatib SM, Stevenson WG, Ackerman MJ, et al. 2017 AHA/ACC/HRS Guideline for Management of Patients With Ventricular Arrhythmias and the Prevention of Sudden Cardiac Death. <em>Journal of the American College of Cardiology</em>. 2018;72(14):e91–e220. doi:10.1016/j.jacc.2017.10.054.</li>
+<li>Lei M, Wu L, Terrar DA, Huang CLH. Modernized Classification of Cardiac Antiarrhythmic Drugs. <em>Circulation</em>. 2018;138(17):1879–1896. doi:10.1161/CIRCULATIONAHA.118.035455.</li>
+</ol>
+<h3>აბრევიატურები</h3>
+<div class="abbr">
+<div><strong>AF</strong>= წინაგულთა ფიბრილაცია</div><div><strong>APB</strong>= წინაგულოვანი ექსტრასისტოლა</div><div><strong>AV</strong>= ატრიოვენტრიკულური</div><div><strong>GFR</strong>= გლომერულური ფილტრაციის სიჩქარე</div><div><strong>GI</strong>= გასტროინტესტინური</div><div><strong>ICD</strong>= იმპლანტირებადი კარდიოვერტერ-დეფიბრილატორი</div><div><strong>IV</strong>= ინტრავენური</div><div><strong>LV</strong>= მარცხენაპარკუჭოვანი</div><div><strong>QTc</strong>= გულისცემის სიხშირით კორეგირებული QT ინტერვალი</div><div><strong>SA</strong>= სინოატრიული</div><div><strong>SVT</strong>= სუპრავენტრიკულური ტაქიკარდია</div><div><strong>VF</strong>= პარკუჭთა ფიბრილაცია</div><div><strong>VPB</strong>= პარკუჭოვანი ექსტრასისტოლა</div><div><strong>VT</strong>= პარკუჭოვანი ტაქიკარდია</div>
+</div>
+</section>
+</main>
+</div>
+<script>
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+    // Mobile nav
+    $('#openNav')?.addEventListener('click',()=>$('#sidebar').classList.toggle('open'));
+    $$('#nav a').forEach(a=>a.addEventListener('click',()=>$('#sidebar').classList.remove('open')));
+
+    // Theme
+    const savedTheme = localStorage.getItem('aa-theme');
+    if(savedTheme) document.documentElement.dataset.theme = savedTheme;
+    $('#themeToggle').addEventListener('click',()=>{
+      const now = document.documentElement.dataset.theme === 'dark' ? '' : 'dark';
+      if(now) document.documentElement.dataset.theme = now; else delete document.documentElement.dataset.theme;
+      localStorage.setItem('aa-theme', now);
+    });
+
+    // Reading progress and active navigation
+    const sections = $$('.searchable[id]');
+    const navLinks = $$('#nav a');
+    function updateProgress(){
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      $('#progressBar').style.width = Math.max(0, Math.min(100, scrollTop / h * 100)) + '%';
+      let current = sections[0]?.id;
+      sections.forEach(s=>{ if(s.offsetTop - 150 <= scrollTop) current = s.id; });
+      navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    }
+    window.addEventListener('scroll', updateProgress); updateProgress();
+
+    // Search sections
+    $('#searchBox').addEventListener('input', (e)=>{
+      const q = e.target.value.trim().toLowerCase(); let visible=0;
+      sections.forEach(sec=>{
+        const hit = !q || sec.innerText.toLowerCase().includes(q);
+        sec.style.display = hit ? '' : 'none';
+        if(hit) visible++;
+      });
+      $('#noResults').style.display = visible ? 'none' : 'block';
+    });
+
+    // Hotspot explanations
+    const classText = {
+      classI:'ბლოკავს Na⁺ სწრაფ არხებს და ანელებს გამტარობას სწრაფარხიან ქსოვილებში. ქვეკლასები განსხვავდება არხთან შეკავშირების კინეტიკით: Ia — შუალედური, Ib — სწრაფი, Ic — ნელი.',
+      classII:'ძირითადად მოქმედებენ სინოატრიულ (SA) და ატრიოვენტრიკულურ (AV) კვანძებზე: მცირდება ავტომატიზმი, ნელდება ატრიოვენტრიკულური გამტარობა, ხანგრძლივდება PR ინტერვალი და იფილტრება სწრაფი წინაგულოვანი იმპულსები.',
+      classIII:'ძირითადად ბლოკავენ K⁺ არხებს და ახანგრძლივებენ რეპოლარიზაციას, მოქმედების პოტენციალს, რეფრაქტერობის პერიოდს და QT ინტერვალს.',
+      classIV:'მოქმედებენ ნელარხიან კვანძოვან ქსოვილზე, ანელებენ ატრიოვენტრიკულურ გამტარობას და გამოიყენება სუპრავენტრიკული ტაქიკარდიი (SVT)/სიხშირის კონტროლის საჭიროების ზოგიერთ შემთხვევაში.'
+    };
+    $$('.hotspot').forEach(el=>el.addEventListener('click',()=>$('#classInfo').textContent=classText[el.dataset.info]));
+
+    // Tabs
+    $$('.tab').forEach(btn=>btn.addEventListener('click',()=>{
+      const group = btn.parentElement; group.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+      const id=btn.dataset.tab; $$('.tab-panel').forEach(p=>p.classList.toggle('active',p.id===id));
+    }));
+
+    // Drug table filters
+    function filterDrugTable(){
+      const q = $('#drugFilter').value.trim().toLowerCase(); const c = $('#classFilter').value;
+      $$('#drugTable tbody tr').forEach(tr=>{
+        const hitQ = !q || tr.innerText.toLowerCase().includes(q);
+        const hitC = c==='all' || tr.dataset.class === c;
+        tr.style.display = hitQ && hitC ? '' : 'none';
+      });
+    }
+    $('#drugFilter').addEventListener('input', filterDrugTable); $('#classFilter').addEventListener('change', filterDrugTable);
+
+    // Calculators
+    function fmt(n,d=1){return Number.isFinite(n)? n.toFixed(d):'—'}
+    window.calcQTc = function(){
+      const qt = parseFloat($('#qt').value), hr = parseFloat($('#hr').value), th=parseFloat($('#qtThreshold').value);
+      if(!qt || !hr){ $('#qtcResult').innerHTML='<span class="badge danger">მონაცემი აკლია</span> შეიყვანეთ სწორი QT და გულისცემის სიხშირე.'; return; }
+      const rr = 60/hr;
+      const bazett = qt/Math.sqrt(rr);
+      const fridericia = qt/Math.cbrt(rr);
+      const max = Math.max(bazett,fridericia);
+      const cls = max>=th?'danger':(max>=th-30?'warn':'ok');
+      const label = max>=th?'აღემატება ზღურბლს':(max>=th-30?'ახლოსაა ზღურბლთან':'ზღურბლზე დაბალია');
+      $('#qtcResult').innerHTML = `<span class="badge ${cls}">${label}</span><p><strong>Bazett-ის QTc:</strong> ${fmt(bazett,0)} მწმ<br><strong>Fridericia-ს QTc:</strong> ${fmt(fridericia,0)} მწმ<br><strong>RR ინტერვალი:</strong> ${fmt(rr,2)} წმ</p><p class="muted">Ia და III კლასის პრეპარატებმა შეიძლება გამოიწვიონ QT პროლონგაცია.</p>`;
+    }
+    window.calcQRS = function(){
+      const base=parseFloat($('#qrsBase').value), now=parseFloat($('#qrsNow').value), limit=parseFloat($('#qrsLimit').value);
+      if(!base || !now){ $('#qrsResult').innerHTML='<span class="badge danger">არასრული მონაცემები</span> შეიყვანეთ QRS-ის მნიშვნელობები.'; return; }
+      const diff=now-base, pct=diff/base*100;
+      const cls=pct>=limit?'danger':(pct>=limit*0.75?'warn':'ok');
+      const label=pct>=limit?'აღემატება ზღურბლს':(pct>=limit*0.75?'ახლოსაა ზღურბლთან':'ზღურბლზე დაბალია');
+      $('#qrsResult').innerHTML=`<span class="badge ${cls}">${label}</span><p><strong>ცვლილება:</strong> ${fmt(diff,0)} მწმ (${fmt(pct,1)}%).</p><p class="muted">I კლასის პრეპარატებს შეუძლიათ გამოიწვიონ QRS-ის პროლონგაცია.</p>`;
+    }
+    window.calcCrCl = function(){
+      const age=parseFloat($('#age').value), wt=parseFloat($('#weight').value), sex=$('#sex').value, scr0=parseFloat($('#scr').value), unit=$('#scrUnit').value;
+      if(!age || !wt || !scr0){ $('#crclResult').innerHTML='<span class="badge danger">მონაცემი აკლია</span> შეიყვანეთ სწორი ასაკი, წონა და კრეატინინი.'; return; }
+      const scr = unit==='umol'? scr0/88.4 : scr0;
+      let crcl = ((140-age)*wt)/(72*scr); if(sex==='female') crcl*=0.85;
+      const cls = crcl<30?'danger':(crcl<60?'warn':'ok');
+      const label = crcl<30?'თირკმლის სიფრთხილის მნიშვნელოვანი სიგნალი':(crcl<60?'თირკმლის სიფრთხილის სიგნალი':'იზოლირებულად CrCl-ის მიხედვით თირკმლის სიფრთხილის სიგნალი არ ჩანს');
+      $('#crclResult').innerHTML=`<span class="badge ${cls}">${label}</span><p><strong>შეფასებული CrCl:</strong> ${fmt(crcl,1)} მლ/წთ Cockcroft–Gault-ის მიხედვით.</p><p class="muted"></p>`;
+    }
+    window.matchClass = function(){
+      const v=$('#rhythmType').value; let html='';
+      const m={
+        avnode:['II კლასი, IV კლასი ან ადენოზინის ლოგიკა','ადენოზინს შეუძლია AV-კვანძზე დამოკიდებული ტაქიარითმიების კუპირება. ბეტა-ბლოკერები და კალციუმის არხების არადიჰიდროპირიდინული ბლოკერები ანელებენ AV-კვანძოვან გამტარობას.'],
+        afrate:['II ან IV კლასის სიხშირის-შემნელებელი ლოგიკა','ბეტა-ბლოკერები და დილთიაზემი/ვერაპამილი ამცირებენ წინაგულების სწრაფი დეპოლარიზაციების AV-კვანძოვან გადაცემას და წინაგულთა ფიბრილაციის/თრთოლვის შემთხვევაში ანელებენ პარკუჭოვან პასუხს.'],
+        ventricular:['I/III კლასის პარკუჭოვანი არითმიის ლოგიკა','I კლასის პრეპარატები გამოიყენება პარკუჭოვანი ტაქიარითმიებისთვის; III კლასის პრეპარატები გამოიყენება სუპრავენტრიკულური და პარკუჭოვანი ტაქიარითმიების (გარდა torsades de pointes პარკუჭოვანი ტაქიკარდიის) სამკურნალოდ.'],
+        wpwaf:['დიგოქსინის თავიდან აცილების სიგნალი','დიგოქსინი უკუნაჩვენებია მანიფესტირებული WPW სინდრომის შემთხვევაში, დამატებითი გზის რეფრაქტერობას შემოკლების გამო, რამაც წინაგულთა ფიბრილაციის დროს შეიძლება გამოიწვიოს სიცოცხლისთვის საშიში პარკუჭოვანი პასუხი.'],
+        torsades:['III კლასის QT-გამახანგრძლივებელი ლოგიკა','III კლასის პრეპარატები არ გამოიყენება torsades de pointes პარკუჭოვანი ტაქიკარდიის შემთხვევაში. Ia კლასის პრეპარატებმაც შეიძლება გამოიწვიოს torsades.'],
+        structural:['I კლასის პროარითმიის სიფრთხილე','I კლასის პრეპარატებმა შეიძლება გააუარესოს პარკუჭოვანი ტაქიკარდია და დათრგუნოს პარკუჭების კუმშვადოება; რისკი უფრო მაღალია გულის სტრუქტურული დაავადების დროს (მაგ., ფლეიკაინდი).']
+      };
+      html=`<span class="badge ${['wpwaf','torsades','structural'].includes(v)?'danger':'ok'}">${m[v][0]}</span><p>${m[v][1]}</p><p class="muted">ეს არის კლასის შესაბამისობის ლოგიკა და არა მკურნალობის რეკომენდაცია.</p>`;
+      $('#matchResult').innerHTML=html;
+    }
+
+    // Flashcards and quiz
+    const cards = [
+      ['რომელი კლასი ბლოკავს ნატრიუმის სწრაფ არხებს?', 'I კლასი. იგი ანელებს გამტარობას სწრაფარხიან ქსოვილებში.'],
+      ['რომელი კლასი ახანგრძლივებს QT-ს ძირითადად კალიუმის არხების ბლოკადის მეშვეობით?', 'III კლასი. Ia კლასი ასევე ახანგრძლივებს QT-ს, რადგან ბლოკავს კალიუმის არხების რეპოლარიზაციას.'],
+      ['რომელი პრეპარატებია IV კლასში?', 'დილთიაზემი და ვერაპამილი.'],
+      ['რა არის I კლასის მთავარი უსაფრთხოების პრობლემა?', 'პროარითმია, განსაკუთრებით პარკუჭოვანი ტაქიკარდიის რისკის მატება; ასევე მნიშვნელოვანია უარყოფითი ინოტროპული ექფექტი.'],
+      ['რატომ არის დიგოქსინი საშიში მანიფესტირებული WPW-ის და წინაგულთა ფიბრილაციის თანაარსებობისას?', 'იგი ამცირებს დამატებითი გზის რეფრაქტერობას და შეიძლება გამოიწვიოს სწრაფი პარკუჭოვანი პასუხი.'],
+      ['რომელ აგენტს აქვს უკიდურესად მოკლე მოქმედება და ბლოკავს AV-კვანძოვან გამტარობას?', 'ადენოზინს.']
+    ];
+    let cardIndex=-1, showingAnswer=false;
+    window.nextCard=function(){ cardIndex=(cardIndex+1)%cards.length; showingAnswer=false; $('#flashcard').textContent=cards[cardIndex][0]; }
+    window.flipCard=function(){ if(cardIndex<0) nextCard(); else { showingAnswer=!showingAnswer; $('#flashcard').textContent=cards[cardIndex][showingAnswer?1:0]; } }
+    nextCard();
+
+    const quizBank = [
+      {q:'რომელი კლასი ახანგრძლივებს მოქმედების პოტენციალის ხანგრძლივობას და რეფრაქტერობას კალიუმის არხების ბლოკადის მეშვეობით?', opts:['I კლასი','II კლასი','III კლასი','IV კლასი'], a:2, why:'III კლასის აგენტები, უმთავრესად, კალიუმის არხების ბლოკერები არიან.'},
+      {q:'რომელ ქვეკლასს აქვს სწრაფი კინეტიკა, ეფექტების უპირატესი გამოვლენით გულისცემის მაღალი სიხშირის დროს?', opts:['Ia','Ib','Ic','IV'], a:1, why:'Ib კლასის პრეპარატებს აქვთ სწრაფი კინეტიკა.'},
+      {q:'მოცემულ ტექსტში რომელი პრეპარატია უკუნაჩვენები მანიფესტირებული WPW სინდრომის შემთხვევაში?', opts:['დიოქსინი','ლიდოკაინი','ატენოლოლი','ვერნაკალანტი'], a:0, why:'დიგოქსინი ამოკლებს დამატებითი გზის რეფრაქტერობას.'},
+      {q:'რომელი კლასი მოქმედებს ძირითადად სინოატრიულ (SA) და ატრიოვენტრიკულურ (AV) კვანძებზე ბეტა-ბლოკადის გზით?', opts:['I კლასი','II კლასი','III კლასი','IV კლასი'], a:1, why:'II კლასის პრეპარატები ბეტა-ბლოკერები არიან.'},
+      {q:'IV კლასის რომელი პრეპარატი შეიძლება გამოიყენებოდეს ფასციკულური პარკუჭოვანი ტაქიკარდიის დროს?', opts:['დილთიაზემი','ვერაპამილი','ადენოზინი','მექსილეტინი'], a:1, why:'მარცხენა სეპტალური/Belhassen-ის/ფასციკულური პარკუჭოვანი ტაქიკარდიის სამკურნალოდ მოწოდებულია ვერაპამილი.'}
+    ];
+    let currentQuiz=0;
+    window.newQuiz=function(){
+      currentQuiz=Math.floor(Math.random()*quizBank.length); const item=quizBank[currentQuiz];
+      $('#quizQ').innerHTML='<strong>კითხვა:</strong> '+item.q; $('#quizFeedback').textContent='';
+      $('#quizOptions').innerHTML='';
+      item.opts.forEach((o,i)=>{const b=document.createElement('button'); b.textContent=o; b.onclick=()=>answerQuiz(i); $('#quizOptions').appendChild(b);});
+    }
+    window.answerQuiz=function(i){
+      const item=quizBank[currentQuiz]; const buttons=$$('#quizOptions button'); buttons.forEach((b,idx)=>{b.disabled=true; if(idx===item.a)b.classList.add('correct'); if(idx===i && i!==item.a)b.classList.add('incorrect');});
+      $('#quizFeedback').textContent = (i===item.a?'სწორია. ':'არ არის სწორი. ') + item.why;
+    }
+    newQuiz();
+
+    // Initialize calculators
+    calcQTc(); calcQRS(); calcCrCl(); matchClass();
+  </script>
+</body>
+</html>
