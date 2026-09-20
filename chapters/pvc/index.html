@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="ka" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="პარკუჭოვანი ექსტრასისტოლის (VPB/PVC) ინტერაქციული სასწავლო სახელმძღვანელო." />
+  <meta name="guide-version" content="2.0-2026-08-03" />
+  <title>პარკუჭოვანი ექსტრასისტოლა — ინტერაქციული ციფრული სახელმძღვანელო v2</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-2: #edf3f8;
+      --text: #18212b;
+      --muted: #5f6d79;
+      --line: #d8e2ea;
+      --primary: #0d6f74;
+      --primary-2: #0a5357;
+      --accent: #c33a44;
+      --accent-soft: #fff0f1;
+      --warning: #9b5b00;
+      --warning-soft: #fff7e8;
+      --success: #217a4b;
+      --success-soft: #ebf8f0;
+      --shadow: 0 14px 36px rgba(18, 52, 69, 0.10);
+      --radius: 18px;
+      --font-scale: 1;
+    }
+
+    html[data-theme="dark"] {
+      --bg: #0f151a;
+      --surface: #182128;
+      --surface-2: #222e36;
+      --text: #edf5f7;
+      --muted: #a8bac3;
+      --line: #34454f;
+      --primary: #5ed2d5;
+      --primary-2: #8ce1e3;
+      --accent: #ff7b85;
+      --accent-soft: #3a2024;
+      --warning: #ffc46b;
+      --warning-soft: #382c1a;
+      --success: #76d39e;
+      --success-soft: #1d3327;
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.32);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(13,111,116,.11), transparent 32rem),
+        var(--bg);
+      font-family: Calibri, "Segoe UI", Arial, sans-serif;
+      font-size: calc(16px * var(--font-scale));
+      line-height: 1.55;
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    a { color: var(--primary); }
+    strong { color: var(--text); }
+
+    .skip-link {
+      position: fixed;
+      left: 1rem;
+      top: -4rem;
+      z-index: 1000;
+      background: var(--surface);
+      color: var(--text);
+      padding: .7rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+    }
+    .skip-link:focus { top: 1rem; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: grid;
+      grid-template-columns: minmax(0,1fr) auto;
+      gap: 1rem;
+      align-items: center;
+      padding: .7rem 1rem;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: linear-gradient(145deg, var(--primary), var(--primary-2));
+      color: white;
+      box-shadow: var(--shadow);
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 1.02rem;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand small { color: var(--muted); }
+    .tools { display: flex; flex-wrap: wrap; gap: .45rem; justify-content: flex-end; }
+    .icon-btn, .pill-btn, .pattern-btn, .quiz-option, .step-btn {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: var(--surface);
+      border-radius: 12px;
+      padding: .55rem .75rem;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .icon-btn:hover, .pill-btn:hover, .pattern-btn:hover, .quiz-option:hover, .step-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--primary);
+    }
+    .icon-btn[aria-pressed="true"], .pattern-btn.active, .step-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .reading-progress {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      z-index: 100;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 285px minmax(0, 1fr);
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+    aside {
+      position: sticky;
+      top: 67px;
+      align-self: start;
+      height: calc(100vh - 67px);
+      overflow: auto;
+      padding: 1rem;
+      border-right: 1px solid var(--line);
+      background: color-mix(in srgb, var(--surface) 76%, transparent);
+    }
+    .search-wrap { position: relative; margin-bottom: .8rem; }
+    .search-wrap input {
+      width: 100%;
+      padding: .7rem .8rem .7rem 2.35rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--text);
+    }
+    .search-wrap span { position: absolute; left: .8rem; top: .68rem; color: var(--muted); }
+    nav a {
+      display: flex;
+      gap: .55rem;
+      align-items: flex-start;
+      text-decoration: none;
+      color: var(--muted);
+      border-radius: 11px;
+      padding: .52rem .6rem;
+      margin-bottom: .16rem;
+      font-size: .94rem;
+    }
+    nav a:hover, nav a.active { background: var(--surface-2); color: var(--text); }
+    nav .num {
+      flex: 0 0 1.55rem;
+      height: 1.55rem;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: .76rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+    .side-note {
+      margin-top: 1rem;
+      padding: .8rem;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    main { min-width: 0; padding: 1rem clamp(1rem, 3vw, 3rem) 5rem; }
+    .hero {
+      display: block;
+      width: 100%;
+      min-height: 0;
+      padding: clamp(1.4rem, 4vw, 3.2rem);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .hero > div:first-child {
+      width: 100%;
+      max-width: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: .5rem;
+      align-items: center;
+      padding: .35rem .65rem;
+      border-radius: 999px;
+      color: var(--primary-2);
+      background: color-mix(in srgb, var(--primary) 13%, transparent);
+      font-weight: 700;
+      font-size: .83rem;
+      letter-spacing: .02em;
+    }
+    .hero h2 {
+      margin: .9rem 0 .75rem;
+      font-size: clamp(2rem, 5vw, 4.3rem);
+      line-height: .98;
+      letter-spacing: -.04em;
+    }
+    .hero p { color: var(--muted); max-width: none; width: 100%; font-size: 1.05rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.2rem; }
+    .primary-btn, .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border-radius: 13px;
+      padding: .75rem 1rem;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid var(--primary);
+    }
+    .primary-btn { background: var(--primary); color: white; }
+    .secondary-btn { background: var(--surface); color: var(--primary); }
+    .pulse-dot { animation: pulse 1.4s infinite; transform-origin: center; }
+    @keyframes pulse { 0%,100%{transform:scale(1); opacity:.65} 50%{transform:scale(1.25); opacity:1} }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: .8rem;
+      margin: 1rem 0 2rem;
+    }
+    .metric {
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+    }
+    .metric strong { display: block; font-size: 1.35rem; color: var(--primary); }
+    .metric span { color: var(--muted); font-size: .9rem; }
+
+    article {
+      scroll-margin-top: 86px;
+      margin: 1.4rem 0;
+      padding: clamp(1.1rem, 2.5vw, 2rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 6px 18px rgba(18,52,69,.05);
+    }
+    article.search-hidden { display: none; }
+    .section-head {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .section-title-wrap { display: flex; gap: .8rem; align-items: flex-start; }
+    .section-number {
+      display: grid;
+      place-items: center;
+      flex: 0 0 2.5rem;
+      height: 2.5rem;
+      border-radius: 14px;
+      background: var(--surface-2);
+      color: var(--primary);
+      font-weight: 800;
+    }
+    h3 { margin: .1rem 0 .25rem; font-size: clamp(1.35rem, 2.5vw, 2rem); line-height: 1.1; }
+    h4 { margin: 1rem 0 .55rem; }
+    .section-subtitle { margin: 0; color: var(--muted); }
+    .badge {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: .3rem .55rem;
+      font-size: .8rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .grid-2, .grid-3 { display: grid; gap: 1rem; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 1rem;
+      background: color-mix(in srgb, var(--surface) 93%, var(--surface-2) 7%);
+    }
+    .card h4 { margin-top: 0; }
+    .card p:last-child { margin-bottom: 0; }
+    .clean-list { padding-left: 1.2rem; }
+    .clean-list li { margin: .42rem 0; }
+    .definition-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; }
+    .term-card {
+      position: relative;
+      padding: .9rem;
+      border-radius: 13px;
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+    }
+    .term-card b { display: block; color: var(--primary); }
+
+    .callout {
+      border-left: 5px solid var(--primary);
+      border-radius: 13px;
+      background: color-mix(in srgb, var(--primary) 9%, var(--surface));
+      padding: .9rem 1rem;
+      margin: 1rem 0;
+    }
+    .callout.warning { border-left-color: var(--warning); background: var(--warning-soft); }
+    .callout.danger { border-left-color: var(--accent); background: var(--accent-soft); }
+    .callout.success { border-left-color: var(--success); background: var(--success-soft); }
+
+    .ecg-lab {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .ecg-toolbar {
+      display: flex;
+      gap: .45rem;
+      flex-wrap: wrap;
+      padding: .7rem;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--line);
+    }
+    .pattern-btn { font-size: .88rem; }
+    .ecg-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .7rem;
+      flex-wrap: wrap;
+      padding: .55rem .8rem;
+      border-bottom: 1px solid #e6cbd0;
+      background: #fff7f8;
+      color: #70434b;
+      font-size: .82rem;
+    }
+    .ecg-status strong { color: #8d1f31; }
+    .ecg-stage {
+      position: relative;
+      min-height: 370px;
+      padding: .45rem .6rem .75rem;
+      overflow: hidden;
+      background-color: #fffafb;
+      background-image:
+        linear-gradient(rgba(225,96,110,.17) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(225,96,110,.17) 1px, transparent 1px),
+        linear-gradient(rgba(197,48,67,.34) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(197,48,67,.34) 1px, transparent 1px);
+      background-size: 10px 10px, 10px 10px, 50px 50px, 50px 50px;
+      box-shadow: inset 0 0 28px rgba(92,32,42,.06);
+    }
+    #ecgSvg { width: 100%; height: 345px; display: block; }
+    .ecg-trace {
+      fill: none;
+      stroke: #111d23;
+      stroke-width: 2.15;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+      filter: drop-shadow(0 .7px 0 rgba(255,255,255,.8));
+    }
+    .ecg-cursor {
+      fill: #c92539;
+      stroke: #fff;
+      stroke-width: 1.2;
+      vector-effect: non-scaling-stroke;
+      filter: drop-shadow(0 0 4px rgba(201,37,57,.68));
+    }
+    .ecg-sweep {
+      stroke: rgba(201,37,57,.38);
+      stroke-width: 1.25;
+      vector-effect: non-scaling-stroke;
+      filter: drop-shadow(0 0 5px rgba(201,37,57,.3));
+    }
+    .ecg-calibration {
+      fill: none;
+      stroke: #111d23;
+      stroke-width: 2.1;
+      stroke-linecap: square;
+      stroke-linejoin: miter;
+      vector-effect: non-scaling-stroke;
+    }
+    .ecg-separator {
+      stroke: rgba(125,55,67,.2);
+      stroke-width: 1;
+      stroke-dasharray: 4 5;
+      vector-effect: non-scaling-stroke;
+    }
+    .ecg-machine-label { fill: #76515a; font-size: 14px; font-weight: 700; letter-spacing: .02em; }
+    .ecg-lead-label { fill: #111d23; font-size: 17px; font-weight: 800; }
+    .ecg-sim-label { fill: #986c75; font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+    .ecg-info { padding: .9rem 1rem; background: var(--surface); border-top: 1px solid var(--line); }
+    .ecg-info strong { color: var(--primary); }
+
+    .mimic-table, .reference-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 650px;
+    }
+    .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+    th, td { text-align: left; vertical-align: top; padding: .78rem; border-bottom: 1px solid var(--line); }
+    th { background: var(--surface-2); }
+    tr:last-child td { border-bottom: 0; }
+
+    .mechanism-tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+    .mechanism-panel { display: none; }
+    .mechanism-panel.active { display: grid; grid-template-columns: .9fr 1.1fr; gap: 1rem; align-items: center; }
+    .mechanism-visual {
+      min-height: 240px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+    .calcium-orb { animation: float 2.1s ease-in-out infinite; }
+    .calcium-orb:nth-child(2){ animation-delay: -.4s; }
+    .calcium-orb:nth-child(3){ animation-delay: -.8s; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .reentry-arrow { animation: spin 4s linear infinite; transform-origin: 120px 120px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .calc {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .field-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .8rem; }
+    .field label { display: block; font-weight: 700; margin-bottom: .3rem; }
+    .field small { display: block; color: var(--muted); margin-top: .25rem; }
+    .field input, .field select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--surface);
+      color: var(--text);
+      padding: .7rem;
+    }
+    .result-panel {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1rem;
+      background: var(--surface-2);
+    }
+    .result-big { font-size: 2.2rem; font-weight: 800; color: var(--primary); line-height: 1; }
+    .thresholds { display: grid; gap: .55rem; margin-top: 1rem; }
+    .threshold {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .65rem;
+      border-radius: 11px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+    .threshold .dot { width: .8rem; height: .8rem; border-radius: 50%; background: var(--muted); }
+    .threshold.hit { border-color: var(--accent); background: var(--accent-soft); }
+    .threshold.hit .dot { background: var(--accent); }
+
+    .risk-builder { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .checklist { display: grid; gap: .55rem; }
+    .checkrow {
+      display: flex;
+      align-items: flex-start;
+      gap: .65rem;
+      padding: .68rem;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--surface);
+    }
+    .checkrow input { margin-top: .25rem; transform: scale(1.15); accent-color: var(--primary); }
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      border-radius: 999px;
+      padding: .38rem .65rem;
+      font-weight: 700;
+      background: var(--success-soft);
+      color: var(--success);
+    }
+    .status-chip.alert { background: var(--accent-soft); color: var(--accent); }
+
+    .pathway {
+      display: grid;
+      gap: .85rem;
+    }
+    .path-node {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: .9rem;
+      background: var(--surface);
+    }
+    .path-node .node-title { display: flex; align-items: center; gap: .55rem; font-weight: 800; }
+    .node-index {
+      display: grid; place-items: center; width: 1.8rem; height: 1.8rem;
+      border-radius: 50%; background: var(--primary); color: white; font-size: .8rem;
+    }
+    .management-output { min-height: 190px; }
+
+    .safety-banner {
+      position: relative;
+      overflow: hidden;
+      padding: 1.2rem;
+      border-radius: 17px;
+      background: linear-gradient(135deg, #5f1117, #9b2832);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+    .safety-banner strong, .safety-banner h4 { color: white; }
+    .safety-banner::after {
+      content: "CAST";
+      position: absolute;
+      right: 1rem;
+      bottom: -1.2rem;
+      font-size: 6rem;
+      line-height: 1;
+      font-weight: 900;
+      opacity: .09;
+    }
+
+    .takeaway-grid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: .75rem; }
+    .takeaway {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: .9rem;
+      background: var(--surface-2);
+    }
+    .takeaway b { display: block; font-size: 1.55rem; color: var(--primary); }
+
+    .quiz-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: .8rem;
+      background: var(--surface-2);
+    }
+    .quiz-options { display: grid; gap: .5rem; margin-top: .8rem; }
+    .quiz-option { text-align: left; }
+    .quiz-option.correct { border-color: var(--success); background: var(--success-soft); }
+    .quiz-option.incorrect { border-color: var(--accent); background: var(--accent-soft); }
+    .quiz-feedback { min-height: 1.5rem; margin-top: .5rem; color: var(--muted); }
+    .quiz-score { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .score-ring {
+      --score: 0;
+      width: 86px; height: 86px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: conic-gradient(var(--primary) calc(var(--score) * 1%), var(--surface-2) 0);
+      position: relative;
+    }
+    .score-ring::before { content:""; position:absolute; inset:8px; border-radius:50%; background:var(--surface); }
+    .score-ring span { position: relative; font-weight: 800; }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      margin: .6rem 0;
+      background: var(--surface);
+    }
+    summary { cursor: pointer; padding: .8rem; font-weight: 700; }
+    details > div { padding: 0 .8rem .8rem; }
+
+    .notebook textarea { min-height: 145px; resize: vertical; }
+    .notebook-actions { display: flex; gap: .5rem; margin-top: .6rem; flex-wrap: wrap; }
+    .footer {
+      padding: 2rem 0 0;
+      color: var(--muted);
+      font-size: .88rem;
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 100;
+      max-width: 360px;
+      padding: .8rem 1rem;
+      border-radius: 12px;
+      color: white;
+      background: #15252b;
+      transform: translateY(140%);
+      transition: transform .25s ease;
+      box-shadow: var(--shadow);
+    }
+    .toast.show { transform: translateY(0); }
+
+    @media (max-width: 1100px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { display: none; }
+      .takeaway-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .quick-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    }
+    @media (max-width: 760px) {
+      .topbar { grid-template-columns: 1fr; }
+      .tools { justify-content: flex-start; }
+      .hero { border-radius: 20px; }
+      .grid-2, .grid-3, .definition-grid, .calc, .risk-builder, .mechanism-panel.active { grid-template-columns: 1fr; }
+      .field-grid { grid-template-columns: 1fr; }
+      .takeaway-grid, .quick-grid { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; }
+      main { padding-inline: .75rem; }
+      .brand small { display: none; }
+    }
+
+    @media print {
+      :root { --bg:#fff; --surface:#fff; --surface-2:#f5f5f5; --text:#000; --muted:#333; --line:#bbb; }
+      body { background:#fff; font-size: 10.5pt; }
+      .topbar, aside, .hero-actions, .ecg-toolbar, .tools, .notebook, .quiz-option, .pattern-btn, .mechanism-tabs, .no-print { display:none !important; }
+      .layout { display:block; }
+      main { padding:0; }
+      .hero, article { box-shadow:none; break-inside:avoid; margin:.5rem 0; }
+      .hero { min-height:0; }
+      article { border-radius:0; }
+      a { color:#000; text-decoration:none; }
+      .ecg-lab { break-inside:avoid; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">ძირითად შინაარსზე გადასვლა</a>
+  <div class="reading-progress" id="readingProgress"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 44 44" width="28" height="28"><path d="M3 23h8l3-8 5 18 5-23 5 13h12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1>პარკუჭოვანი ექსტრასისტოლა</h1>
+        <small >ინტერაქციული ციფრული სახელმძღვანელო</small>
+        
+      </div>
+    </div>
+    <div class="tools" role="toolbar" aria-label="სახელმძღვანელოს მართვის ღილაკები">
+      <button class="icon-btn" id="fontDown" title="ტექსტის ზომის შემცირება">A−</button>
+      <button class="icon-btn" id="fontUp" title="ტექსტის ზომის გაზრდა">A+</button>
+      <button class="icon-btn" id="themeBtn" title="თემა" aria-pressed="false">◐</button>
+      <button class="icon-btn" id="printBtn" title="ბეჭდვა">⎙</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <div class="search-wrap">
+        <span>⌕</span>
+        <input id="sectionSearch" type="search" placeholder="ძიება" aria-label="სექციებში ძიება" />
+      </div>
+      <nav id="sideNav" aria-label="სახელმძღვანელოს სექციები">
+        <a href="#definition"><span class="num">1</span><span><span >განსაზღვრება და ტერმინები</span></span></a>
+        <a href="#recognition"><span class="num">2</span><span><span >ეკგ ამოცნობა</span></span></a>
+        <a href="#epidemiology"><span class="num">3</span><span><span >ეპიდემიოლოგია</span></span></a>
+        <a href="#mechanisms"><span class="num">4</span><span><span >მექანიზმები</span></span></a>
+        <a href="#presentation"><span class="num">5</span><span><span >კლინიკური გამოვლინება</span></span></a>
+        <a href="#importance"><span class="num">6</span><span><span >რატომ არის მნიშვნელოვანი</span></span></a>
+        <a href="#evaluation"><span class="num">7</span><span><span >შეფასება</span></span></a>
+        <a href="#management"><span class="num">8</span><span><span >მართვა</span></span></a>
+        <a href="#safety"><span class="num">9</span><span><span >უსაფრთხოების პრინციპი</span></span></a>
+        <a href="#takehome"><span class="num">10</span><span><span >საკვანძო გზავნილები</span></span></a>
+        <a href="#quiz"><span class="num">✓</span><span><span >თვითშეფასება</span></span></a>
+        <a href="#references"><span class="num">R</span><span><span >ლიტერატურა</span></span></a>
+      </nav>
+      <div class="side-note">
+        <strong >სასწავლო მიზანი</strong><br />
+        <span >პარკუჭოვანი ექსტრასისტოლის ამოცნობა, მისი ტვირთის შეფასება, ძირითადი დაავადების იდენტიფიკაცია და ოპტიმალური მართვის შერჩევა.</span>
+        
+      </div>
+    </aside>
+
+    <main id="mainContent">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div>
+          <span class="eyebrow">· ავტორი: პროფ. კახაბერ ჭელიძე, M.D., Ph.D. · რედაქტორი: ნათია ეფრემიძე, M.D. · 2026 </span>
+          <h2 id="heroTitle">პარკუჭოვანი ექსტრასისტოლა</h2>
+          <p >პარკუჭოვანი ექსტრასისტოლის ამოცნობის, კლინიკური მნიშვნელობის, შეფასების და მართვის ინტერაქციული სახელმძღვანელო სტუდენტებისთვის.</p>
+          
+          <div class="hero-actions">
+            <a class="primary-btn" href="#recognition"><span>▶</span><span >ეკგ ლაბორატორია</span></a>
+            <a class="secondary-btn" href="#importance"><span>∑</span><span >გამოთვალეთ პარკუჭოვანი ექსტრასისტოლიის ტვირთი</span></a>
+          </div>
+        </div>
+      </section>
+
+      <div class="quick-grid" aria-label="საკვანძო ფაქტები">
+        <div class="metric"><strong>≥120 მწმ</strong><span >ტიპური ფართო QRS კომპლექსი</span></div>
+        <div class="metric"><strong>&gt;10%</strong><span >მაღალი ტვირთი</span></div>
+        <div class="metric"><strong>&gt;10,000/დღ</strong><span >კარდიომიოპათიის რისკთან ასოცირებული ზღურბლი</span></div>
+        <div class="metric"><strong>Cardiac Arrhythmia Suppression Trial (CAST)</strong><span >სუპრესია ≠ უკეთესი გამოსავალი</span></div>
+      </div>
+
+      <article id="definition" data-search="definition terminology monomorphic polymorphic multifocal bigeminy trigeminy couplet interpolated r-on-t extrasystole განსაზღვრება ტერმინები">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">1</div><div><h3><span >განსაზღვრება და ტერმინოლოგია</span></h3><p class="section-subtitle"></p></div></div>
+          <span class="badge">რეფერენსი [1]</span>
+        </div>
+        <div class="callout">
+          <p ><strong>პარკუჭოვანი ექსტრასისტოლა</strong>, რომელსაც ასევე ეწოდება ნაადრევი პარკუჭოვანი კომპლექსი/შეკუმშვა, არის ნაადრევი პარკუჭოვანი დეპოლარიზაცია, რომელიც წარმოიქმნება ჰისის კონის ბიფურკაციის ქვემოთ მდებარე ექტოპიური კერიდან.</p>
+          
+        </div>
+        <div class="definition-grid">
+          <div class="term-card"><b>მონომორფული</b><span >ერთი მორფოლოგიის QRS კომპლექსები — ერთი კერა.</span></div>
+          <div class="term-card"><b>პოლიმორფული / მულტიფოკალური</b><span >განსხვავებული მორფოლოგიის QRS კომპლექსები — რამდენიმე შესაძლო კერა.</span></div>
+          <div class="term-card"><b>ბიგემინია / ტრიგემინია</b><span >ალორითმიის ტიპები, როდესაც ყოველი მე-2 / მე-3 კომპლექსი არის პარკუჭოვანი ექსტრასისტოლა.</span></div>
+          <div class="term-card"><b>კუპლეტი</b><span >ორი თანმიმდევრული პარკუჭოვანი ექსტრასისტოლა; ≥3 თანმიმდევრული პარკუჭოვანი კომპლექსი &gt;100/წთ სიხშირით და &lt;30 წმ ხანგრძლივობით შეესაბამება არამდგრად პარკუჭოვან ტაქიკარდიას.</span></div>
+          <div class="term-card"><b>ინტერპოლირებული</b><span >პარკუჭოვანი ექსტრასისტოლა, რომელიც მოთავსებულია ორ სინუსურ დარტყმას შორის კომპენსატორული პაუზის გარეშე.</span></div>
+          <div class="term-card"><b>R-on-T</b><span >პარკუჭოვანი ექსტრასისტოლა, რომელიც "აზის" წინა კომპლექსის T კბილს. მაღალია პოლიმორფული პარკუჭოვანი ტაქიკარდიის ან პარკუჭთა ფიბრილაციის განვითარების რისკი.</span></div>
+        </div>
+      </article>
+
+      <article id="recognition" data-search="ecg recognition wide qrs premature p wave compensatory pause rvot lbbb inferior axis transition v3 aberrancy ეკგ ამოცნობა">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">2</div><div><h3><span >ელექტროკარდიოგრაფიული მახასიათებლები</span></h3><p class="section-subtitle"><span >პატერნები, ლოკალიზაცია და გამორიცხვის ნიშნები </span></p></div></div>
+          <span class="badge">რეფერენსები [1–2]</span>
+        </div>
+
+        <div class="ecg-lab" aria-label="ინტერაქციული ეკგ-პატერნების ლაბორატორია">
+          <div class="ecg-toolbar" id="ecgButtons">
+            <button class="pattern-btn active" data-pattern="isolated">იზოლირებული</button>
+            <button class="pattern-btn" data-pattern="bigeminy">ბიგემინია</button>
+            <button class="pattern-btn" data-pattern="trigeminy">ტრიგემინია</button>
+            <button class="pattern-btn" data-pattern="couplet">კუპლეტი</button>
+            <button class="pattern-btn" data-pattern="interpolated">ინტერპოლირებული</button>
+            <button class="pattern-btn" data-pattern="ront">R-on-T</button>
+            <button class="pattern-btn" id="ecgReplay" type="button"><span aria-hidden="true">↻</span> <span >განმეორება</span></button>
+          </div>
+          <div class="ecg-status">
+            <span><strong id="ecgPatternTitle">იზოლირებული პარკუჭოვანი ექსტრასისტოლა</strong> · <span >სინქრონული სამგანხრიანი ჩანაწერი</span></span>
+            <span>განხრები: II · V1 · V6</span>
+            <span>25 მმ/წმ · 10 მმ/მვ</span>
+          </div>
+          <div class="ecg-stage">
+            <svg id="ecgSvg" viewBox="0 0 1200 330" preserveAspectRatio="none" role="img" aria-label="ანიმაციური სიმულაციური სამგანხრიანი ეკგ რითმის ჩანაწერი">
+              <defs>
+                <clipPath id="ecgReveal"><rect id="ecgRevealRect" x="108" y="0" width="0" height="330" /></clipPath>
+              </defs>
+              <line class="ecg-separator" x1="8" y1="111" x2="1188" y2="111" />
+              <line class="ecg-separator" x1="8" y1="206" x2="1188" y2="206" />
+
+              <text class="ecg-lead-label" x="16" y="32">II</text>
+              <text class="ecg-lead-label" x="16" y="127">V1</text>
+              <text class="ecg-lead-label" x="16" y="222">V6</text>
+
+              <path class="ecg-calibration" d="M18 78 L18 28 L68 28 L68 78 L92 78" />
+              <path class="ecg-calibration" d="M18 173 L18 123 L68 123 L68 173 L92 173" />
+              <path class="ecg-calibration" d="M18 268 L18 218 L68 218 L68 268 L92 268" />
+
+              <g clip-path="url(#ecgReveal)">
+                <path id="ecgPathII" class="ecg-trace" d="" />
+                <path id="ecgPathV1" class="ecg-trace" d="" />
+                <path id="ecgPathV6" class="ecg-trace" d="" />
+              </g>
+
+              <line id="ecgSweep" class="ecg-sweep" x1="108" y1="10" x2="108" y2="292" />
+              <circle id="ecgCursorII" class="ecg-cursor" cx="108" cy="78" r="3.7" />
+              <circle id="ecgCursorV1" class="ecg-cursor" cx="108" cy="173" r="3.7" />
+              <circle id="ecgCursorV6" class="ecg-cursor" cx="108" cy="268" r="3.7" />
+
+              <text class="ecg-machine-label" x="18" y="316">25 მმ/წმ · 10 მმ/მვ · 50 ჰც</text>
+              <text class="ecg-sim-label" x="1178" y="316" text-anchor="end">სიმულაციური სასწავლო ელექტროკარდიოგრამა</text>
+            </svg>
+          </div>
+          <div class="ecg-info" id="ecgInfo"></div>
+        </div>
+        <p class="section-subtitle"><span >ანიმაციები აჩვენებს ერთსა და იმავე რითმს II, V1 და V6 განხრებში, სტანდარტული ეკგ ქაღალდის, კალიბრაციის, P–QRS–T მორფოლოგიის, პარკუწოვანი ექსტრასისტოლის იმიტაციით. ჩანაწერები სასწავლო სიმულაციაა და არ წარმოადგენს რეალურ ელექტროკარდიოგრამას.</span></p>
+
+        <div class="grid-2" style="margin-top:1rem">
+          <div class="card">
+            <h4><span >კლასიკური ნიშნები</span></h4>
+            <ul class="clean-list">
+              <li><span >ფართო QRS კომპლექსი, ჩვეულებრივ ≥120 მწმ; ახასიათებს უჩვეულო მორფოლოგია და დისკორდანტული T კბილი.</span></li>
+              <li><span >აღმოცენდება მორიგ სინუსურ იმპულსზე ადრე და არ აქვს წინმსწრები P კბილი.</span></li>
+              <li><span >ჩვეულებრივ მოსდევს სრული კომპენსაციური პაუზა.</span></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4><span >წარმოშობის სავარაუდო ადგილი</span></h4>
+            <ul class="clean-list">
+              <li><span ><strong>LBBB მორფოლოგია + ქვემო ღერძი</strong> ანუ როცა პარკუჭოვან ექსტრასისტოლას აქვს ჰისის კონის მარცხენა ფეხის ბლოკისთვის დამახასიათებელი კონფიგურაცია და გულის ელექტრული ღერძი მიმართულია ქვემოთ (დადებითი QRS ქვედა II, III და aVF განხრებში), წარმოშობის სავარაუდო ადგილი არის მარჯვენა პარკუჭის გამომტანი ტრაქტი (RVOT) - ყველაზე ხშირი იდიოპათიური ლოკუსი.</span></li>
+              <li><span ><strong>R/S ტრანზიცია V3 პრეკორდიულ განხრამდე (ადრეული ტრანზიცია)</strong>  მიუთითებს პარკუჭოვანი ექსტრასისტოლის მარცხენამხრივ წარმოშობაზე.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <h4><span >უნდა განვასხვავოთ აბერანტული სუპრავენტრიკულური ექსტრასისტოლისგან</span></h4>
+        <div class="table-scroll">
+          <table class="mimic-table">
+            <thead><tr><th>მახასიათებელი</th><th>პარკუჭოვანი ექსტრასისტოლა</th><th>აბერანტული სუპრავენტრიკულური ექსტრასისტოლა</th></tr></thead>
+            <tbody>
+              <tr><td>P კბილი</td><td><span >ჩვეულებრივ არ არის წინმსწრები P კბილი</span></td><td><span >ჩვეულებრივ არის წინმსწრები ექსტრასისტოლური P კბილი</span></td></tr>
+              <tr><td>QRS პატერნი</td><td><span >ფართო, უჩვეულო („დამახნიჯებული“) მორფოლოგია</span></td><td><span >უფრო ხშირად ტიპური RBBB/LBBB პატერნი</span></td></tr>
+              <tr><td>პაუზა</td><td><span >ძირითადად სრული კომპენსაციური პაუზა</span></td><td><span >ძირითადად არასრული კომპენსაციური პაუზა</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article id="epidemiology" data-search="epidemiology prevalence monitoring healthy adults age 0.6 2.7 50 percent 3 20 ეპიდემიოლოგია გავრცელება">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">3</div><div><h3><span >ეპიდემიოლოგია</span></h3><p class="section-subtitle"><span >პრევალირება მნიშვნელოვნად არის დამოკიდებული დიაგნოსტიკურ მეთოდზე</span></p></div></div>
+          <span class="badge">რეფერენსები [3–4]</span>
+        </div>
+        <div class="grid-3">
+          <div class="card"><h4>0.6%</h4><p >12-განხრიანი ელექტროკარდიოგრაფიით 20 წლამდე ჯანმრთელ ინდივიდებში.</p></div>
+          <div class="card"><h4>2.7%</h4><p >12-განხრიანი ელექტროკარდიოგრაფიით ჯანმრთელ ინდივიდებში 50 წლის ზემოთ.</p></div>
+          <div class="card"><h4>≈50%</h4><p >გახანგრძლივებული მონიტორინგით ზრდასრულებში, გულის დაავადების არსებობის მიუხედავად.</p></div>
+        </div>
+        <div class="callout"><span >ზოგად პოპულაციაში აღწერილი პრევალირება, გამოყენებული დიაგნოსტიკური მეთოდის მიხედვით, არის <strong>3%–20%</strong>. პრევალირება იზრდება პოპულაციის ასაკის მატებასთან ერთად.</span></div>
+      </article>
+
+      <article id="mechanisms" data-search="mechanisms triggered activity afterdepolarization calcium automaticity reentry catecholamines digitalis electrolyte ischemia thyroid stimulants hypoxia მექანიზმები">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">4</div><div><h3><span >მექანიზმი და მაპროვოცირებელი ფაქტორები</span></h3><p class="section-subtitle">ტრიგერული აქტივობა · ავტომატიზმი · რიენტრი</p></div></div>
+          <span class="badge">რეფერენსები [5–6]</span>
+        </div>
+        <div class="mechanism-tabs" role="tablist">
+          <button class="step-btn active" data-mech="triggered">ტრიგერული აქტივობა</button>
+          <button class="step-btn" data-mech="automaticity">გაზრდილი ავტომატიზმი</button>
+          <button class="step-btn" data-mech="reentry">რიენტრი</button>
+        </div>
+        <div class="mechanism-panel active" id="mech-triggered">
+          <div class="mechanism-visual">
+            <svg viewBox="0 0 300 250" width="100%" height="240" aria-hidden="true">
+              <path d="M20 185 C55 185 62 60 105 60 C137 60 140 180 175 180 C202 180 206 122 235 122 C260 122 265 185 286 185" fill="none" stroke="currentColor" stroke-width="5"/>
+              <circle class="calcium-orb" cx="190" cy="85" r="10" fill="#d94f58"/><circle class="calcium-orb" cx="225" cy="65" r="8" fill="#d94f58"/><circle class="calcium-orb" cx="254" cy="92" r="11" fill="#d94f58"/>
+              <text x="20" y="225" fill="currentColor" font-size="16">პოსტდეპოლარიზაცია</text>
+            </svg>
+          </div>
+          <div><h4>ადრეული / დაგვიანებული პოსტდეპოლარიზაცია (EAD/DAD)</h4><p >უჯრედშიდა კალციუმის ჭარბი დაგროვება ხელს უწყობს ადრეულ ან დაგვიანებულ პოსტდეპოლარიზაციას, რასაც ხელს უწყობს კატექოლამინები, ტაქიკარდია და დიგიტალისი. აღნიშნული მექანიზმი საფუძვლად უდევს გამომტანი ტრაქტის ექტოპიის შემთხვევათა უმრავლესობას.</p></div>
+        </div>
+        <div class="mechanism-panel" id="mech-automaticity">
+          <div class="mechanism-visual">
+            <svg viewBox="0 0 300 250" width="100%" height="240" aria-hidden="true">
+              <path d="M25 192 C65 190 76 153 86 105 C94 67 122 55 148 79 C167 97 166 139 179 161 C196 191 237 190 277 190" fill="none" stroke="currentColor" stroke-width="5"/>
+              <circle class="pulse-dot" cx="148" cy="79" r="12" fill="#ffe685"/><path d="M148 35v25M107 53l18 19M189 53l-18 19" stroke="#d94f58" stroke-width="4" stroke-linecap="round"/>
+              <text x="37" y="225" fill="currentColor" font-size="16">იმპულსის ნაადრევი ექტოპიური გენერირება</text>
+            </svg>
+          </div>
+          <div><h4>გაზრდილი ავტომატიზმი</h4><p >ექტოპიური კერა სპონტანურად აღწევს ზღურბლს მორიგი სინუსური იმპულსის აღმოცენებამდე და იწვევს ნაადრევ პარკუჭოვან დეპოლარიზაციას.</p></div>
+        </div>
+        <div class="mechanism-panel" id="mech-reentry">
+          <div class="mechanism-visual">
+            <svg viewBox="0 0 240 240" width="240" height="240" aria-hidden="true">
+              <circle cx="120" cy="120" r="72" fill="none" stroke="var(--line)" stroke-width="26"/>
+              <path class="reentry-arrow" d="M120 38a82 82 0 1 1-58 24" fill="none" stroke="#d94f58" stroke-width="8" stroke-linecap="round"/>
+              <path d="M54 48l12 34 30-18" fill="#d94f58"/>
+              <path d="M95 82l50 76" stroke="currentColor" stroke-width="10" opacity=".65"/>
+              <text x="72" y="226" fill="currentColor" font-size="16">ცირკულაციური წრედი</text>
+            </svg>
+          </div>
+          <div><h4>რიენტრი</h4><p >იმპულსი ცირკულირებს ნაწიბუროვან ქსოვილში ან ჰის–პურკინიეს სისტემის ტოტებში და ხელახლა ააქტიურებს პარკუჭს.</p></div>
+        </div>
+        <div class="callout warning">
+          <strong >მაპროვოცირებელი ფაქტორები:</strong>
+          <span > ჰიპოკალიემია, ჰიპომაგნიემია, იშემია, ჰიპერთირეოზი, სტიმულატორები (კოფეინი, სიმპათომიმეტიკები, ალკოჰოლი), ჰიპოქსია, დიგოქსინის ტოქსიკურობა და გულის სტრუქტურული დაავადება.</span>
+          
+        </div>
+      </article>
+
+      <article id="presentation" data-search="clinical presentation symptoms palpitations skipped beat forceful fatigue lightheadedness pulse deficit asymptomatic symptom burden კლინიკური გამოვლინება">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">5</div><div><h3><span >კლინიკური გამოვლინება</span></h3><p class="section-subtitle"><span >სიმპტომების ინტენსივობა ნაკლებად კორელირებს პარკუჭოვანი ექსტრასისტოლიის ტვირთთან</span></p></div></div>
+          <span class="badge">რეფერენსები [1,7]</span>
+        </div>
+        <div class="grid-2">
+          <div class="card"><h4><span >უსიმპტომო მიმდინარეობა</span></h4><p >ძირითადად უსიმპტომოა და ვლინდება შემთხვევით.</p></div>
+          <div class="card"><h4><span >სიმპტომური მიმდინარეობა</span></h4><p >გულის ფრიალი, „გამოვარდნები“ ან ძლიერი დარტყმის შეგრძნება, დაღლილობა და თავბრუ. ძლიერი დარტყმის შეგრძნება შეიძლება განპირობებული იყოს პოსტექსტრასისტოლური პოტენციაციით (ექსტრასისტოლის მომდევნო სინუსური შეკუმშვის დროს, სარკოპლაზმური ბადიდან ერთბაშად გამოიყოფა გაცილებით მეტი კალციუმი, ვიდრე ჩვეულებრივ. კალციუმის ეს მოზღვავება იწვევს აქტინისა და მიოზინის ფიბრილების უფრო ძლიერ კავშირს, რაც განაპირობებს გულის კუნთის გაძლიერებულ შეკუმშვას ანუ დადებით ინოტროპულ ეფექტს).</p></div>
+        </div>
+        <div class="callout"><span >ფიზიკურად შეიძლება გამოვლინდეს <strong>პულსის დეფიციტი</strong> (სხვაობა გულის შეკუმშვათა რეალურ სიხშირესა [აუსკულტაციით ან ეკგ-თი გაზომილს] და პერიფერიული პულსის სიხშირეს შორის) ან არარეგულარული პულსი.</span></div>
+      </article>
+
+      <article id="importance" data-search="why matter risk mortality cardiomyopathy burden 10000 20000 10 percent polymorphic exercise recovery vf ventricular fibrillation calculator მნიშვნელობა burden კალკულატორი">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">6</div><div><h3><span >პარკუჭოვანი ექსტრასისტოლის მნიშვნელობა</span></h3><p class="section-subtitle"><span >რისკის მარკერი, შექცევადი კარდიომიოპათია და იშვიათი ავთვისებიანი ტრიგერი</span></p></div></div>
+          <span class="badge">რეფერენსები [1–3]</span>
+        </div>
+        <div class="grid-3">
+          <div class="card"><h4><span >პოპულაციური რისკი</span></h4><p >ხშირი პარკუჭოვანი ექსტრასისტოლები (≥1 კომპლექსი 12-განხრიან ეკგ-ზე ან &gt;30/საათში ხანგრძლივი მონიტორინგის შემთხვევაში) ასოცირდება გულ-სისხლძარღვთა დაავადებების და სიკვდილიანობის გაზრდილ რისკთან. ფიზიკური დატვირთვის დროს ან აღდგენის პერიოდში აღმოცენებული მულტიფოკალური პარკუჭოვანი ექსტრასისტოლია ასოცირებულია დამატებით კარდიოვასკულურ რისკთან, როგორც ფონური დაავადების მარკერი.</p></div>
+          <div class="card"><h4><span >პარკუჭოვანი ექსტრასისტოლიით ინდუცირებული კარდიომიოპათია</span></h4><p >ძალიან ხშირმა პარკუჭოვანმა ექსტარსისტოლამ (&gt;10,000–20,000/დღე ან &gt;10% ტვირთი) შეიძლება გამოიწვიოს მარცხენა პარკუჭის დისფუნქცია, რომელიც შექცევადია ექტოპიის კუპირების შემდგომ.</p></div>
+          <div class="card"><h4><span >იშვიათი ავთვისებიანი ტრიგერი</span></h4><p >მოკლე შეწყვილების ინტერვალის მქონე იდიოპათიური პარკუჭოვანი ექსტრასისტოლა იშვიათად შეიძლება გახდეს სტრუქტურულად ნორმალურ გულში პოლიმორფული პარკუჭოვანი ტაქიკარდიის ან პარკუჭთა ფიბრილაციის ტრიგერი.</p></div>
+        </div>
+
+        <h4><span >პარკუჭოვანი ექსტრასისტოლიის ტვირთის კალკულატორი</span></h4>
+        <div class="calc">
+          <div class="card">
+            <div class="field-grid">
+              <div class="field"><label for="monitorHours"><span >მონიტორინგის საათები</span></label><input id="monitorHours" type="number" min="1" max="336" step="1" value="24" /></div>
+              <div class="field"><label for="avgHr"><span >საშუალო გულისცემა /წთ</span></label><input id="avgHr" type="number" min="20" max="250" step="1" value="70" /></div>
+              <div class="field"><label for="pvcCount"><span >პარკუჭოვანი ექსტრასისტოლების დაფიქსირებული რაოდენობა</span></label><input id="pvcCount" type="number" min="0" step="1" value="8000" /></div>
+              <div class="field"><label for="totalBeatsOverride"><span >გულის შეკუმშვათა ჯამური რაოდენობა (არასავალდებულო)</span></label><input id="totalBeatsOverride" type="number" min="0" step="1" placeholder="ავტომაური გამოთვლა" /><small >შეიყვანეთ ზუსტი რაოდენობა,თუ მოცემულია Holter-ის დასკვნაში.</small></div>
+            </div>
+          </div>
+          <div class="result-panel" aria-live="polite">
+            <div><span >გამოთვლილი ტვირთი</span></div>
+            <div class="result-big" id="burdenValue">—</div>
+            <p id="burdenDetail" class="section-subtitle"></p>
+            <div class="thresholds">
+              <div class="threshold" id="threshold10"><span class="dot"></span><span><strong>&gt;10%</strong> <span >ტვირთი - კარდიომიოპათიის ზღურბლი</span></span></div>
+              <div class="threshold" id="threshold10k"><span class="dot"></span><span><strong>&gt;10,000/დღე</strong> <span >დღიური რაოდენობის ქვედა ზღურბლი</span></span></div>
+              <div class="threshold" id="threshold20k"><span class="dot"></span><span><strong>&gt;20,000/დღე</strong> <span >ძალიან ხშირი ექტოპიის ზედა ზღურბლი</span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="callout warning"><span >საშუალო გულისცემით დათვლილი გულის შეკუმშვათა ჯამური რაოდენობა არაზუსტი მაჩვენებელია. უმჯობესია Holter-ის მონიტორით დათვლილი რაოდენობა.</span></div>
+      </article>
+
+      <article id="evaluation" data-search="evaluation history exam syncope exertional family history sudden death ecg qt blood electrolytes renal thyroid count holter echo mri ischemia genetic referral red flags შეფასება">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">7</div><div><h3><span >შეფასების გეგმა</span></h3><p class="section-subtitle"><span >ტვირთის რაოდენობრივი შეფასება და სტრუქტურული/მემკვიდრული დაავადების გამორიცხვა</span></p></div></div>
+          <span class="badge">რეფერენსები [1,3,7–8]</span>
+        </div>
+        <div class="pathway">
+          <div class="path-node"><div class="node-title"><span class="node-index">1</span><span >ანამნეზი და გასინჯვა</span></div><p >სიმპტომების ტვირთი, სინკოპე, დატვირთვასთან დაკავშირებული სიმპტომები, უეცარი კარდიული სიკვდილის ან კარდიომიოპათიის ოჯახური ანამნეზი.</p></div>
+          <div class="path-node"><div class="node-title"><span class="node-index">2</span><span>12-განხრიანი ეკგ</span></div><p >პარკუჭოვანი ექსტრასისტოლის მორფოლოგია, QT ინტერვალი, გადატანილი ინფარქტის ნიშნები, ჩენელოპათიების ან კარდიომიოპათიის პატერნი.</p></div>
+          <div class="path-node"><div class="node-title"><span class="node-index">3</span><span >ლაბორატორია</span></div><p >ელექტროლიტები, თირკმლის ფუნქცია, ფარისებრი ჯირკვლის ფუნქცია და სისხლის საერთო ანალიზი.</p></div>
+          <div class="path-node"><div class="node-title"><span class="node-index">4</span><span >ამბულატორიული მონიტორინგი</span></div><p >24-საათიანი Holter ან უფრო ხანგრძლივი მონიტორინგი ტვირთის, მორფოლოგიის და კომპლექსურობის დასადგენად.</p></div>
+          <div class="path-node"><div class="node-title"><span class="node-index">5</span><span >ექოკარდიოგრაფია</span></div><p >მარცხენა პარკუჭის ფუნქციის შეფასება და სტრუქტურული დაავადების გამორიცხვა.</p></div>
+          <div class="path-node"><div class="node-title"><span class="node-index">6</span><span >კონკრეტულ, სპეციფიკურ შემთხვევებში</span></div><p >დატვირთვის ტესტი, კარდიო-MRI, იშემიის შეფასება ან გენეტიკური/ელექტროფიზიოლოგიური კვლევა, როდესაც საეჭვოა ჩენელოპათია ან მემკვიდრეობითი კარდიომიოპათია.</p></div>
+        </div>
+
+        <h4><span >რეფერალის წითელი ალმები</span></h4>
+        <div class="risk-builder">
+          <div class="checklist" id="redFlagList">
+            <label class="checkrow"><input type="checkbox" value="syncope"/><span><strong><span >სინკოპე</span></strong></span></label>
+            <label class="checkrow"><input type="checkbox" value="family"/><span><strong><span >უეცარი სიკვდილის ოჯახური ანამნეზი</span></strong></span></label>
+            <label class="checkrow"><input type="checkbox" value="poly"/><span><strong><span >პოლიმორფული ან ძალიან მოკლე შეწყვილების ექტოპია</span></strong></span></label>
+            <label class="checkrow"><input type="checkbox" value="exercise"/><span><strong><span >ფიზიკური დატვირთვით გამოწვეული ექტოპია</span></strong></span></label>
+            <label class="checkrow"><input type="checkbox" value="lvef"/><span><strong><span >მარცხენა პარკუჭის განდევნის ფრაქციის (LVEF) დაქვეითება</span></strong></span></label>
+            <label class="checkrow"><input type="checkbox" value="imaging"/><span><strong><span >სტრუქტურული ვიზუალიზაციით პათოლოგიური ცვლილებები</span></strong></span></label>
+          </div>
+          <div class="result-panel">
+            <div id="redFlagStatus" class="status-chip"><span>●</span><span >წითელი ალამი არ არის მონიშნული</span></div>
+            <p id="redFlagText" style="margin-top:1rem"></p>
+            <div class="callout danger"><span ><strong>ძირითადი პრინციპი:</strong> ჩამოთვლილთაგან ნებისმიერის არსებობის შემთხვევაში აუცილებელია კარდიოლოგთან რეფერალი.</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article id="management" data-search="management reassurance triggers caffeine beta blocker calcium channel blocker flecainide propafenone sotalol amiodarone ablation high burden cardiomyopathy follow-up მართვა მკურნალობა">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">8</div><div><h3><span >მართვა</span></h3><p class="section-subtitle"><span >მკურნალობის სამიზნეა სიმპტომები ან მარცხენა პარკუჭის დისფუნქცია.</span></p></div></div>
+          <span class="badge">რეფერენსები [2–3,9]</span>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h4><span >მართვის ძირითადი საფეხურები</span></h4>
+            <ul class="clean-list">
+              <li><span ><strong>უსიმპტომო მიმდინარეობა, ნორმალური სტრუქტურა, დაბალი ტვირთი:</strong> ანტიარითმიული თერაპია არ არის საჭირო.</span></li>
+              <li><span ><strong>მსუბუქი სიმპტომები:</strong> მაპროვოცირებელი ფაქტორების მინიმიზაცია; ელექტროლიტური და ფარისებრი დარღვევების კორექცია.</span></li>
+              <li><span ><strong>სიმპტომური მიმდინარეობა, გულის ნორმალური სტრუქტურა:</strong> პირველი რიგი — ბეტა-ბლოკერი ან კალციუმის არხის არადიჰიდროპირიდინული ბლოკერი; ზომიერი ეფექტურობა, დაბალი რისკი.</span></li>
+              <li><span ><strong>მკურნალობისადმი რეფრაქტერობა/მკურნალობის აუტანლობა:</strong> ფლეკაინიდი, პროპაფენონი ან სოტალოლი, თუ არ არის გულის სტრუქტურული დაავადება; იდიოპათიური ექტოპიის მკურნალობისთვის არ გამოიყენება ამიოდარონი, ტოქსიკურობის გამო.</span></li>
+              <li><span ><strong>კათეტერული აბლაცია:</strong> მაღალეფექტურია მედიკამენტებისადმი რეზისტენტობის ან ფარმაკოთერაპიის აუტანლობის შემთხვევაში. რეკომენდებულია &gt;10% ტვირთის და პარკუჭოვანი ექსტრასისტოლიით ინდუცირფებული კარდიომიოპათიის თანაარსებობის შემთხვევაში.</span></li>
+              <li><span ><strong>უსიმპტომო მიმდინარეობა, მაღალი ტვირთი, მარცხენა პარკუჭის  დისფუნქციის გარეშე:</strong> რისკის შეფასება; თუ არ მკურნალობს, ყოველწლიურად პერიოდული ექოკარდიოგრაფია და ჰოლტერის მონიტორირება.</span></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4><span >მართვის ინტერაქციული სავარჯიშო</span></h4>
+            <div class="field-grid">
+              <div class="field"><label for="symptomSelect"><span >სიმპტომები</span></label><select id="symptomSelect"><option value="none">ასიმპტომური</option><option value="mild">მსუბუქი სიმპტომები</option><option value="significant">გამოხატული სიმპტომები</option></select></div>
+              <div class="field"><label for="structureSelect"><span >სტრუქტურული დაავადება</span></label><select id="structureSelect"><option value="normal">არ არის იდენტიფიცირებული / ნორმული იმიჯინგი</option><option value="abnormal">არის ან საეჭვოა</option></select></div>
+              <div class="field"><label for="lvSelect">მარცხენა პარკუჭის ფუნქცია</label><select id="lvSelect"><option value="normal">შენახული</option><option value="reduced">დაქვეითებული</option></select></div>
+              <div class="field"><label for="burdenSelect">პარკუჭოვანი ექსრტასისტოლის ტვირთი</label><select id="burdenSelect"><option value="low">10%-ზე ნაკლები</option><option value="high">10%-ზე მეტი</option></select></div>
+              <div class="field"><label for="firstLineSelect"><span >პირველი რიგის თერაპიის შედეგი</span></label><select id="firstLineSelect"><option value="nottried">არ დაწყებულა / არ არის საჭირო</option><option value="effective">ეფექტურია და კარგად იტანს</option><option value="failed">არაეფექტურია ან ვერ აიტანა</option></select></div>
+            </div>
+            <button class="primary-btn" id="buildPlan" type="button" style="margin-top:1rem"><span>↳</span><span >სასწავლო გეგმის გენერაცია</span></button>
+          </div>
+        </div>
+        <div class="result-panel management-output" id="managementOutput" aria-live="polite" style="margin-top:1rem">
+          <span class="section-subtitle">აირჩიეთ მონაცემები და დააჭირეთ „სასწავლო გეგმის გენერაციას“.</span>
+          
+        </div>
+      </article>
+
+      <article id="safety" data-search="critical safety cast class I flecainide encainide moricizine d-sotalol mortality myocardial infarction lvef outcomes უსაფრთხოება cast სიკვდილიანობა">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">9</div><div><h3><span >კრიტიკული უსაფრთხოების პრინციპი</span></h3><p class="section-subtitle">პარკუჭოვანი ექსტრასისტოლიის სუპრესია ავტომატურად არ ნიშნავს გამოსავლის გაუმჯობესებას</p></div></div>
+          <span class="badge">რეფერენსი [3]</span>
+        </div>
+        <div class="safety-banner">
+          <h4>CAST კვლევის შედეგი</h4>
+          <p ><strong>Cardiac Arrhythmia Suppression Trial (CAST)</strong>-ში კლასი I ნატრიუმის არხის ბლოკერებმა (ფლეკაინიდი, ენკაინიდი, მორიციზინი) წარმატებით დათრგუნეს  მიოკარდიუმის ინფარქტის შემდგომი პარკუჭოვანი ექტოპია, მაგრამ გაზარდეს სიკვდილიანობა.</p>
+          
+          <p >Class I პრეპარატები და d-სოტალოლი ასევე ზრდის სიკვდილიანობას მარცხენა პარკუჭის განდევნის ფრაქციის დაქვეითების შემთხვევაშიც.</p>
+          
+        </div>
+        <div class="callout danger"><span ><strong>მხოლოდ პარკუჭოვანი ექსტრასისტოლის კუპირების მიზნით არ გამოიყენოთ კლასი I ანტიარითმულები გულის სტრუქტურული დაავადების ან მარცხენა პარკუჭის განდევნის ფრაქციის დაქვეითების შემთხვევაში.</strong></span></div>
+      </article>
+
+      <article id="takehome" data-search="take home points common benign reversible trigger structural ischemic monitor echo high burden treat symptoms avoid class I დასკვნა მთავარი">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">10</div><div><h3><span >საკვანძო გზავნილები</span></h3><p class="section-subtitle"><span ></span></p></div></div>
+        </div>
+        <div class="takeaway-grid">
+          <div class="takeaway"><b>1</b><span >სტრუქტურულად ნორმალურ გულში აღმოცენებული პარკუჭოვანი ექსტრასისტოლია, ძირითადად, კეთილთვისებიანია.</span></div>
+          <div class="takeaway"><b>2</b><span >პარკუჭოვანი ექსტრასისტოლიის შემთხვევაში აუცილებელია  შექცევადი ტრიგერების და გულის სტრუქტურული ან იშემიური დაავადების იდენტიფიცირება.</span></div>
+          <div class="takeaway"><b>3</b><span >ამბულატორული მონიტორინგის მეშვეობით უნდა განისაზღვროს პარკუჭოვანი ექსტრასისტოლიის ტვირთი, ხოლო ექოკარდიოგრაფიით - მარცხენა პარკუჭის ფუნქცია და სტრუქტურული ცვლილებები.</span></div>
+          <div class="takeaway"><b>4</b><span >პარკუჭოვანი ექსტრასისტოლიის მაღალმა ტვირთმა (&gt;10% ან &gt;10,000/დღე) შეიძლება გამოიწვიოს შექცევადი კარდიომიოპათია.</span></div>
+          <div class="takeaway"><b>5</b><span >პარკუჭოვანი ექსტრასისტოლიის მართვა უნდა ფოკუსირდეს სიმპტომებსა ანდა მარცხენა პარკუჭის დისფუნქციაზე. გულის სტრუქტურული დაავადების შემთხვევაში არ გამოიყენება კლასი I ანტიარითმული მედიკამენტები.</span></div>
+        </div>
+      </article>
+
+      <article id="quiz" data-search="quiz knowledge check student questions ცოდნის შემოწმება ტესტი">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">✓</div><div><h3><span >თვითშეფასება</span></h3><p class="section-subtitle"><span >ათი მოკლე კითხვა მყისიერი უკუკავშირით</span></p></div></div>
+        </div>
+        <div id="quizContainer"></div>
+        <div class="quiz-score">
+          <div class="score-ring" id="scoreRing"><span id="scoreText">0/10</span></div>
+          <div><strong id="scoreMessage"><span >უპასუხეთ კითხვებს.</span></strong><br/><span class="section-subtitle" id="scoreSub"></span></div>
+          <button class="pill-btn no-print" id="resetQuiz" type="button"><span >ქვიზის განულება</span></button>
+          <button class="pill-btn no-print" id="exportQuiz" type="button"><span >შედეგის CSV ექსპორტი</span></button>
+        </div>
+      </article>
+
+      <article id="original" data-search="ჰენდაუტი სრული ტექსტი პარკუჭოვანი ექსტრასისტოლა">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">ჰ</div><div><h3>პარკუჭოვანი ექსტრასისტოლა</h3><p class="section-subtitle">ჰენდაუტის სრული ქართული თარგმანი</p></div></div>
+        </div>
+        <details><summary>გახსენით ჰენდაუტი</summary><div>
+          <h4>1. განსაზღვრება და ტერმინოლოგია</h4>
+          <p><strong>პარკუჭოვანი ექსტრასისტოლა</strong>, იგივე რიგგარეშე პარკუჭოვანი კომპლექსი/შეკუმშვა, არის ნაადრევი პარკუჭოვანი დეპოლარიზაცია, რომელიც წარმოიშობა ჰისის კონის ბიფურკაციის ქვემოთ მდებარე ექტოპიური კერიდან.[1]</p>
+          <p>აღწერითი ტერმინები:</p>
+          <ul>
+            <li><strong>მონომორფული</strong> (QRS კომპლექსების ერთი მორფოლოგია, ერთი კერა) და <strong>პოლიმორფული/მულტიფოკალური</strong> (რამდენიმე განსხვავებული მორფოლოგიის QRS კომპლექსები, რამდენიმე კერა).</li>
+            <li><strong>ბიგემინია / ტრიგემინია</strong> — ალორითმიის ტიპები, როდესაც ყოველი მეორე / მესამე დარტყმა არის პარკუჭოვანი ექსტრასისტოლა.</li>
+            <li><strong>კუპლეტი</strong> — ორი თანმიმდევრული პარკუჭოვანი ექსტრასისტოლა; ≥3 თანმიმდევრული პარკუჭოვანი კომპლექსი &gt;100/წთ სიხშირით შეესაბამება არამდგრად პარკუჭოვან ტაქიკარდიას, თუ ეპიზოდი &lt;30 წამს გრძელდება.</li>
+            <li><strong>ინტერპოლირებული</strong> — პარკუჭოვანი ექსტრასისტოლა მოთავსებულია ორ სინუსურ კომპლექსს შორის კომპენსაციური პაუზის გარეშე.</li>
+            <li><strong>R-on-T</strong> — პარკუჭოვანი ექსტრასისტოლა ემთხვევა წინმსწრები კომპლექსის T კბილს.</li>
+          </ul>
+          <h4>2. ეკგ მახასიათებლები</h4>
+          <ul>
+            <li>ფართო QRS კომპლექსი (როგორც წესი, ≥120 მწმ), უჩვეულო მორფოლოგია და დისკორდანტული T კბილი.</li>
+            <li>აღმოცენდება მოსალოდნელ სინუსურ დარტყმაზე ადრე და წინ არ უძღვის P კბილი.</li>
+            <li>ჩვეულებრივ, მოსდევს სრული კომპენსაციური პაუზა.</li>
+            <li>შესაძლებელია წარმოშობის ადგილის სავარაუდო განსაზღვრა: LBBB-ის მორფოლოგია ქვემო ღერძით → მარჯვენა პარკუჭის გამომტანი ტრაქტი (ყველაზე ხშირი იდიოპათიური ლოკალიზაცია); პრეკორდიული R/S ტრანზიცია V3-მდე (ადრეული ტრანზიცია) მიუთითებს მარცხენამხრივ წარმოშობაზე.[2]</li>
+            <li>უნდა გამოირიცხოს: აბერანტულად გატარებული სუპრავენტრიკულური ექსტრასისტოლა, რომელსაც წინ უძღვის ნაადრევი P კბილი და ახასიათებს ტიპური RBBB/LBBB პატერნი).</li>
+          </ul>
+          <h4>3. ეპიდემიოლოგია</h4>
+          <ul>
+            <li>12-განხრიან ეკგ-ზე პარკუჭოვანი ექსტრასისტოლა ჯანმრთელი ადამიანების მცირე ნაწილში ვლინდება (20 წლამდე — 0.6%, 50 წლის ზემოთ — 2.7%), ხოლო გახანგრძლივებული მონიტორინგით იგი აღირიცხება ზრდასრულთა დაახლოებით 50%-ში, გულის დაავადების არსებობის მიუხედავად; გავრცელება იზრდება ასაკთან ერთად.[3]</li>
+            <li>გამოვლენის მეთოდის მიხედვით, ზოგად პოპულაციაში აღწერილი გავრცელება 3%–20%-ს შეადგენს.[4]</li>
+          </ul>
+          <h4>4. მექანიზმები</h4>
+          <ul>
+            <li>ადრეული ან დაგვიანებული პოსტდეპოლარიზაციებით განპირობებული ტრიგერული აქტივობა (უჯრედშიდა კალციუმის ჭარბი დაგროვება; ხელს უწყობს კატექოლამინები, ტაქიკარდია და დიგიტალისი) — გამომტანი ტრაქტის ექტოპიის შემთხვევათა უმრავლესობის მექანიზმი.[5][6]</li>
+            <li>ექტოპიური კერის გაძლიერებული ავტომატიზმი.[5][6]</li>
+            <li>რიენტრი ნაწიბუროვან ქსოვილში ან ჰის–პურკინიეს სისტემის ტოტებში.[5]</li>
+          </ul>
+          <p><strong>ხშირი მაპროვოცირებელი ფაქტორები:</strong> ელექტროლიტური დარღვევები (ჰიპოკალიემია, ჰიპომაგნიემია), იშემია, ჰიპერთირეოზი, სტიმულატორები (კოფეინი, სიმპათომიმეტიკები, ალკოჰოლი), ჰიპოქსია, დიგოქსინის ტოქსიკურობა და გულის სტრუქტურული დაავადება.</p>
+          <h4>5. კლინიკური გამოვლინება</h4>
+          <p>ხშირად მიმდინარეობს უსიმპტომოდ და ვლინდება შემთხვევით. სიმპტომური მიმდინარეობისას შესაძლებელია გულის ფრიალი, „გულისცემის გამოვარდნის“ ან ძლიერი დარტყმის შეგრძნება (პოსტექსტრასისტოლურად გაძლიერებული დარტყმის გამო), დაღლილობა და თავბრუ. გასინჯვისას შეიძლება გამოვლინდეს პულსის დეფიციტი ან არარეგულარული პულსი. სიმპტომების სიმძიმე სუსტად კორელირებს პარკუჭოვანი ექსტრასისტოლიის ტვირთთან.[1][7]</p>
+          <h4>6. რატომ არის პარკუჭოვანი ექსტრასისტოლა მნიშვნელოვანი?</h4>
+          <ul>
+            <li>ზოგად პოპულაციაში ხშირი პარკუჭოვანი ექსტრასისტოლები (≥1 კომპლექსი 12-განხრიან ეკგ-ზე ან &gt;30/საათში) ასოცირებულია გულ-სისხლძარღვთა რისკის და სიკვდილიანობის ზრდასთან; მულტიფოკალური ექსტრასისტოლები და ფიზიკური დატვირთვის ან აღდგენის ფაზაში აღმოცენებული ექსტრასისტოლები უკავშირდება დამატებით რისკს და წარმოადგენს ფონური დაავადების მარკერს.[3]</li>
+            <li><strong>პარკუჭოვანი ექსტრასისტოლიით ინდუცირებული კარდიომიოპათია:</strong> ძალიან ხშირმა ექტოპიამ (ხშირად გამოყენებული ზღურბლებია &gt;10,000–20,000/დღე ან ტვირთი &gt;10%) შეიძლება გამოიწვიოს მარცხენა პარკუჭის შექცევადი დისფუნქცია, რომელიც უმჯობესდება ექტოპიის დათრგუნვის შემდეგ.[2][3]</li>
+            <li>იშვიათად, სტრუქტურულად ნორმალურ გულში, მოკლე შეწყვილების ინტერვალის მქონე იდიოპათიურმა პარკუჭოვანმა ექსტრასისტოლებმა  შეიძლება გამოიწვიოს პოლიმორფული პარკუჭოვანი ტაქიკარდია ან პარკუჭთა ფიბრილაცია.[1][3]</li>
+          </ul>
+          <h4>7. შეფასება</h4>
+          <ol>
+            <li><strong>ანამნეზი და გასინჯვა:</strong> სიმპტომების ტვირთი, სინკოპე, დატვირთვასთან დაკავშირებული სიმპტომები, უეცარი კარდიული სიკვდილის ან კარდიომიოპათიის ოჯახური ანამნეზი.</li>
+            <li><strong>12-განხრიანი ეკგ:</strong> პარკუჭოვანი ექსტრასისტოლის მორფოლოგია, QT ინტერვალი, გადატანილი ინფარქტის ნიშნები, ჩენელოპათიის ან კარდიომიოპათიის პატერნები.</li>
+            <li><strong>ლაბორატორიული კვლევები:</strong> ელექტროლიტები (კალიუმი, მაგნიუმი), თირკმლის ფუნქცია, ფარისებრი ჯირკვლის ფუნქცია და სისხლის საერთო ანალიზი.[7]</li>
+            <li><strong>ამბულატორიული მონიტორინგი</strong> (24-საათიანი Holter ან უფრო ხანგრძლივი) ტვირთის, მორფოლოგიის და კომპლექსურობის რაოდენობრივი შეფასებისთვის.[7]</li>
+            <li><strong>ექოკარდიოგრაფია</strong> მარცხენა პარკუჭის ფუნქციის შესაფასებლად და გულის სტრუქტურული დაავადების გამოსარიცხად.[3]</li>
+            <li><strong>შერჩეულ პაციენტებში:</strong> დატვირთვის ტესტი (დატვირთვით ინდუცირებული ექტოპიის და იშემიის შეფასება), კარიო-MRI, იშემიის შეფასება ან გენეტიკური/ელექტროფიზიოლოგიური კვლევა, როდესაც საეჭვოა ჩენელოპათია ან მემკვიდრეობითი კარდიომიოპათია.[1][8]</li>
+          </ol>
+          <p><strong>სპეციალისტთან რეფერალის წითელი ალმები:</strong> სინკოპე, უეცარი სიკვდილის ოჯახური ანამნეზი, პოლიმორფული ან ძალიან მოკლე შეწყვილების ინტერვალის მქონე ექტოპია, დატვირთვით ინდუცირებული ექტოპია, მარცხენა პარკუჭის განდევნის ფრაქციის დაქვეითება ან სტრუქტურული ვიზუალიზაციით პათოლოგიური ცვლილებები.</p>
+          <h4>8. მართვა</h4>
+          <ul>
+            <li><strong>უსიმპტომო პაციენტი, სტრუქტურულად ნორმალური გული, დაბალი ტვირთი</strong> — განმარტება და დაკვირვება; ანტიარითმიული თერაპია საჭირო არ არის.[3]</li>
+            <li><strong>მსუბუქი სიმპტომები</strong> — მაპროვოცირებელი ფაქტორების შემცირება ან გამორიცხვა (კოფეინის ჭარბი მიღება, სტიმულატორები, ალკოჰოლი); ელექტროლიტური და ფარისებრი ჯირკვლის ფუნქციის დარღვევების კორექცია.[3]</li>
+            <li><strong>სიმპტომური პაციენტი, სტრუქტურულად ნორმალური გული</strong> — პირველი რიგის თერაპიაა ბეტა-ბლოკერი ან კალციუმის არხის არადიჰიდროპირიდინული ბლოკერი (AHA/ACC/HRS, კლასი I); ეფექტურობა ზომიერია, ხოლო რისკი — დაბალი.[3][9]</li>
+            <li><strong>რეფრაქტერული სიმპტომები ან პირველი რიგის თერაპიის აუტანლობა</strong> — გულის სტრუქტურული დაავადების არარსებობისას შეიძლება განიხილებოდეს სხვა ანტიარითმიული პრეპარატები (მაგ., ფლეკაინიდი, პროპაფენონი, სოტალოლი); იდიოპათიური ექტოპიის დროს არ გამოიყენება ამიოდარონი, ტოქსიკურობის გამო.[3][9]</li>
+            <li><strong>კათეტერული აბლაცია</strong> — მაღალეფექტურია მედიკამენტების მიმართ რეზისტენტობის ან აუტანლობის შემთხვევაში და აუცილებლად უნდა იქნეს განხილული კარდიომიოპათიასთან ასოცირებული მაღალი ტვირთის (&gt;10%) შემთხვევაში, რადგან მარცხენა პარკუჭის ფუნქცია, როგორც წესი, უმჯობესდება.[2]</li>
+            <li><strong>უსიმპტომო მაღალი ტვირთი მარცხენა პარკუჭის დისფუნქციის გარეშე</strong> — პაციენტთან რისკის განხილვა; მკურნალობის არჩატარების შემთხვევაში პერიოდული ექოკარდიოგრაფია და Holter-მონიტორინგი, თავდაპირველად წელიწადში ერთხელ.[2]</li>
+          </ul>
+          <h4>9. უსაფრთხოების კრიტიკული პრინციპი</h4>
+          <p>პარკუჭოვანი ექსტრასისტოლების დათრგუნვა არ ნიშნავს კლინიკური გამოსავლის გაუმჯობესებას. <strong>Cardiac Arrhythmia Suppression Trial (CAST)</strong>-ში კლასი I ნატრიუმის არხის ბლოკერებმა (ფლეკაინიდი, ენკაინიდი, მორიციზინი) მიოკარდიუმის ინფარქტის შემდეგ დათრგუნეს ექტოპია, მაგრამ გაზარდეს სიკვდილიანობა. კლასი I პრეპარატები და d-სოტალოლი ასევე ზრდის სიკვდილიანობას მარცხენა პარკუჭის განდევნის ფრაქციის დაქვეითების მქონე პაციენტებში. პარკუჭოვანი ექსტრასისტოლიის საწინააღმდეგო ანტიარითმიული თერაპია მიმართული უნდა იყოს სიმპტომების ან მარცხენა პარკუჭის დისფუნქციისკენ და არა მხოლოდ ეკგ-მონაცემის დათრგუნვისკენ.[3]</p>
+          <h4>10. ხუთი საკვანძო გზავნილი</h4>
+          <ol>
+            <li>პარკუჭოვანი ექსტრასისტოლები ხშირია და სტრუქტურულად ნორმალურ გულში, როგორც წესი, კეთილთვისებიანია.</li>
+            <li>ყოველთვის მოძებნეთ შექცევადი მაპროვოცირებელი ფაქტორი და გულის ფონური სტრუქტურული ან იშემიური დაავადება.</li>
+            <li>პარკუჭოვანი ექსტრასისტოლიის ტვირთი შეაფასეთ ამბულატორიული მონიტორინგით, ხოლო მარცხენა პარკუჭის ფუნქცია — ექოკარდიოგრაფიით.</li>
+            <li>პარკუჭოვანი ექსტრასისტოლიის მაღალმა ტვირთმა (&gt;10% ან &gt;10,000/დღე) შეიძლება გამოიწვიოს კარდიომიოპათია, რომელიც შექცევადია ექტოპიის კუპირების შემთხვევაში.</li>
+            <li>მართეთ სიმპტომები ან პარკუჭის დისფუნქცია. გულის სტრუქტურული დაავადების შემთხვევაში არ გამოიყენოთ კლასი I ანტიარითმული მედიკამენტები.</li>
+          </ol>
+        </div></details>
+      </article>
+
+      <article id="references" data-search="references bibliography doi literature ლიტერატურა წყაროები">
+        <div class="section-head">
+          <div class="section-title-wrap"><div class="section-number">R</div><div><h3><span >ლიტერატურა</span></h3><p class="section-subtitle"><span ></span></p></div></div>
+        </div>
+        <div class="table-scroll">
+          <table class="reference-table">
+            <thead><tr><th>#</th><th>წყარო</th><th>DOI</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Yap R, Calian D, Wright M, Rinaldi A, Whitaker J. Premature Ventricular Complexes. <em>Clinical Medicine (London, England)</em>. 2026;26(4):100609.</td><td><a href="https://doi.org/10.1016/j.clinme.2026.100609" target="_blank" rel="noopener">10.1016/j.clinme.2026.100609</a></td></tr>
+              <tr><td>2</td><td>Dukkipati SR, Choudry S, Koruth JS, et al. Catheter Ablation of Ventricular Tachycardia in Structurally Normal Hearts: Indications, Strategies, and Outcomes—Part I. <em>J Am Coll Cardiol</em>. 2017;70(23):2909–2923.</td><td><a href="https://doi.org/10.1016/j.jacc.2017.10.031" target="_blank" rel="noopener">10.1016/j.jacc.2017.10.031</a></td></tr>
+              <tr><td>3</td><td>Al-Khatib SM, Stevenson WG, Ackerman MJ, et al. 2017 AHA/ACC/HRS Guideline for Management of Patients With Ventricular Arrhythmias and the Prevention of Sudden Cardiac Death. <em>Heart Rhythm</em>. 2018;15(10):e73–e189.</td><td><a href="https://doi.org/10.1016/j.hrthm.2017.10.036" target="_blank" rel="noopener">10.1016/j.hrthm.2017.10.036</a></td></tr>
+              <tr><td>4</td><td>Klewer J, Springer J, Morshedzadeh J. Premature Ventricular Contractions (PVCs): A Narrative Review. <em>Am J Med</em>. 2022;135(11):1300–1305.</td><td><a href="https://doi.org/10.1016/j.amjmed.2022.07.004" target="_blank" rel="noopener">10.1016/j.amjmed.2022.07.004</a></td></tr>
+              <tr><td>5</td><td>De Silva K, Haqqani H, Mahajan R, et al. Catheter Ablation vs Antiarrhythmic Drug Therapy for Treatment of Premature Ventricular Complexes: A Systematic Review. <em>JACC Clin Electrophysiol</em>. 2023;9(6):873–885.</td><td><a href="https://doi.org/10.1016/j.jacep.2023.01.035" target="_blank" rel="noopener">10.1016/j.jacep.2023.01.035</a></td></tr>
+              <tr><td>6</td><td>Cronin EM, Bogun FM, Maury P, et al. 2019 HRS/EHRA/APHRS/LAHRS Expert Consensus Statement on Catheter Ablation of Ventricular Arrhythmias. <em>Heart Rhythm</em>. 2020;17(1):e2–e154.</td><td><a href="https://doi.org/10.1016/j.hrthm.2019.03.002" target="_blank" rel="noopener">10.1016/j.hrthm.2019.03.002</a></td></tr>
+              <tr><td>7</td><td>Sorgente A, Farkowski MM, Iliodromitis K, et al. Contemporary Clinical Management of Monomorphic Idiopathic Premature Ventricular Contractions: Results of the European Heart Rhythm Association Survey. <em>Europace</em>. 2022;24(6):1006–1014.</td><td><a href="https://doi.org/10.1093/europace/euab307" target="_blank" rel="noopener">10.1093/europace/euab307</a></td></tr>
+              <tr><td>8</td><td>Enriquez A, Hanson M, Garcia F. To Beat or Not to Beat: When and How to Treat Premature Ventricular Complexes. <em>Annual Review of Medicine</em>. 2025.</td><td><a href="https://doi.org/10.1146/annurev-med-050124-025932" target="_blank" rel="noopener">10.1146/annurev-med-050124-025932</a></td></tr>
+              <tr><td>9</td><td>Kojić D, Radunović A, Bukumirić Z, et al. Idiopathic premature ventricular complexes treatment: Comparison of flecainide, propafenone, and sotalol. <em>Clinical Cardiology</em>. 2023;46(10):1220–1226.</td><td><a href="https://doi.org/10.1002/clc.24090" target="_blank" rel="noopener">10.1002/clc.24090</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="notebook" id="notes" data-search="notes notebook student notes ჩანაწერები">
+        <div class="section-head"><div class="section-title-wrap"><div class="section-number">✎</div><div><h3><span >შენიშვნები</span></h3><p class="section-subtitle"><span >ინახება მხოლოდ ამ ბრაუზერში</span></p></div></div></div>
+        <textarea id="studentNotes" placeholder="ჩაწერეთ თქვენი შენიშვნები..."></textarea>
+        <div class="notebook-actions"><button class="pill-btn" id="saveNotes"><span >შენახვა</span></button><button class="pill-btn" id="downloadNotes"><span >TXT ჩამოტვირთვა</span></button><button class="pill-btn" id="clearNotes"><span >გასუფთავება</span></button></div>
+      </article>
+
+      <div class="footer">
+        <p >საგანმანათლებლო რესურსი. არ ცვლის პაციენტზე მორგებულ კლინიკურ გადაწყვეტილებას, სპეციალისტის შეფასებას ან ადგილობრივ პროტოკოლს.</p>
+        
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      'use strict';
+      const root = document.documentElement;
+      root.dataset.theme = localStorage.getItem('vpb-theme') || 'light';
+      const savedScale = Number(localStorage.getItem('vpb-font-scale') || 1);
+      root.style.setProperty('--font-scale', String(savedScale));
+
+      const toast = (message) => {
+        const el = document.getElementById('toast');
+        el.textContent = message;
+        el.classList.add('show');
+        clearTimeout(window.__toastTimer);
+        window.__toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+      };
+      document.getElementById('themeBtn').addEventListener('click', (e) => {
+        root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('vpb-theme', root.dataset.theme);
+        e.currentTarget.setAttribute('aria-pressed', root.dataset.theme === 'dark');
+      });
+      document.getElementById('fontDown').addEventListener('click', () => changeFont(-0.05));
+      document.getElementById('fontUp').addEventListener('click', () => changeFont(0.05));
+      document.getElementById('printBtn').addEventListener('click', () => window.print());
+      function changeFont(delta) {
+        let value = Number(getComputedStyle(root).getPropertyValue('--font-scale')) || 1;
+        value = Math.max(.85, Math.min(1.3, Math.round((value + delta) * 100) / 100));
+        root.style.setProperty('--font-scale', String(value));
+        localStorage.setItem('vpb-font-scale', String(value));
+      }
+
+      const progress = document.getElementById('readingProgress');
+      window.addEventListener('scroll', () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.width = `${max > 0 ? (window.scrollY / max) * 100 : 0}%`;
+      }, {passive:true});
+
+      const articles = [...document.querySelectorAll('main article')];
+      const navLinks = [...document.querySelectorAll('#sideNav a')];
+      const observer = new IntersectionObserver(entries => {
+        const visible = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${visible.target.id}`));
+      }, {rootMargin:'-20% 0px -65% 0px', threshold:[0,.25,.5]});
+      articles.forEach(a => observer.observe(a));
+
+      document.getElementById('sectionSearch').addEventListener('input', (e) => {
+        const q = e.target.value.trim().toLowerCase();
+        articles.forEach(article => {
+          const haystack = `${article.dataset.search || ''} ${article.textContent}`.toLowerCase();
+          article.classList.toggle('search-hidden', q && !haystack.includes(q));
+        });
+      });
+
+      // ECG generator: synchronized, morphology-aware II/V1/V6 diagnostic rhythm strip
+      const ecgPaths = {
+        II: document.getElementById('ecgPathII'),
+        V1: document.getElementById('ecgPathV1'),
+        V6: document.getElementById('ecgPathV6')
+      };
+      const ecgCursors = {
+        II: document.getElementById('ecgCursorII'),
+        V1: document.getElementById('ecgCursorV1'),
+        V6: document.getElementById('ecgCursorV6')
+      };
+      const revealRect = document.getElementById('ecgRevealRect');
+      const sweep = document.getElementById('ecgSweep');
+      const patternTitle = document.getElementById('ecgPatternTitle');
+      let animationFrame = null;
+      let currentPattern = 'isolated';
+      const patternNames = {
+        isolated: 'იზოლირებული პარკუჭოვანი ექსტრასისტოლა', bigeminy: 'ბიგემინია', trigeminy: 'ტრიგემინია',
+        couplet: 'კუპლეტი', interpolated: 'ინტერპოლირებული', ront: 'R-on-T'
+      };
+      const patternInfo = {
+        isolated: '<strong>იზოლირებული პარკუჭოვანი ექსტრასისტოლა:</strong> სამივე განხრაში ჩანს ნაადრევი, ფართო და უჩვეულო QRS კომპლექსები წინმსწრები P კბილის გარეშე. შემდეგი სინუსური კომპლექსი ჩნდება სრული კომპენსატორული პაუზის შემდეგ.',
+        bigeminy: '<strong>ბიგემინია:</strong> თითოეულ სინუსურ კომპლექსს მოსდევს ერთი და იმავე მორფოლოგიის პარკუჭოვანი ექსტრასისტოლური QRS კომპლექსი.',
+        trigeminy: '<strong>ტრიგემინია:</strong> ყოველ ორ სინუსურ კომპლექსს მოსდევს ერთი და იმავე მორფოლოგიის პარკუჭოვანი ექსტრასისტოლური QRS კომპლექსი.',
+        couplet: '<strong>კუპლეტი:</strong> ორი თანმიმდევრული ფართო პარკუჭოვანი ექსტრასისტოლური QRS კომპლექსები წინმსწრები P კბილების გარეშე. ≥3 თანმიმდევრული პარკუჭოვანი ექსტრასისტოლა (ანუ ≥ტრიპლეტი) არის არამდგრადი პარკუჭოვანი ტაქიკარდია.',
+        interpolated: '<strong>ინტერპოლირებული პარკუჭოვანი ექსტრასისტოლა:</strong> პარკუჭოვანი ექსტრასისტოლა "ჩამჯდარია" ორ სინუსურ კომპლექსს შორისაა; შენარჩუნებულია სინუსური კომპლექსების RR ინტერვალი და პარკუჭოვან ექსტრასისტოლას არ მოსდევს კომპენსაციური პაუზა.',
+        ront: '<strong>R-on-T:</strong> ანუ R კბილი T კბილზე - ძალიან მოკლე შეწყვილების ინტერვალის მქონე პარკუჭოვანი ექსტრასისტოლა, რომელიც "აზის" წინა სინუსური კომპლექსის T კბილს. პოტენციურად საშიში დროითი კავშირი!!!'
+      };
+      const gaussian = (t, center, width, amplitude) => amplitude * Math.exp(-0.5 * ((t-center)/width) ** 2);
+      const leadProfiles = {
+        II: {
+          baseline: 78, phase: .2,
+          normal: {p:.13, q:-.13, r:1.02, s:-.29, t:.31},
+          pvc: {a:-.13, b:.88, c:-.40, tw:-.28}
+        },
+        V1: {
+          baseline: 173, phase: 1.1,
+          normal: {p:.07, q:-.05, r:.24, s:-.78, t:.18},
+          pvc: {a:.10, b:-.82, c:.16, tw:.29}
+        },
+        V6: {
+          baseline: 268, phase: 2.2,
+          normal: {p:.10, q:-.09, r:.94, s:-.15, t:.28},
+          pvc: {a:-.13, b:.88, c:-.16, tw:-.30}
+        }
+      };
+      function sinusWave(dt, lead) {
+        const a=leadProfiles[lead].normal;
+        return gaussian(dt,-.205,.038,a.p)
+             + gaussian(dt,-.038,.012,a.q)
+             + gaussian(dt,0,.011,a.r)
+             + gaussian(dt,.030,.015,a.s)
+             + gaussian(dt,.285,.072,a.t);
+      }
+      function pvcWave(dt, lead) {
+        const a=leadProfiles[lead].pvc;
+        return gaussian(dt,-.020,.024,a.a)
+             + gaussian(dt,.070,.055,a.b)
+             + gaussian(dt,.175,.058,a.c)
+             + gaussian(dt,.410,.095,a.tw);
+      }
+      function rhythmSchedule(type) {
+        const n = t => ({t,kind:'N'});
+        const v = t => ({t,kind:'V'});
+        if (type==='isolated') return [n(.48),n(1.35),v(1.91),n(3.09),n(3.96),n(4.83)];
+        if (type==='bigeminy') return [n(.42),v(.95),n(2.10),v(2.63),n(3.78),v(4.31)];
+        if (type==='trigeminy') return [n(.32),n(1.19),v(1.72),n(2.87),n(3.74),v(4.27)];
+        if (type==='couplet') return [n(.42),n(1.29),v(1.83),v(2.28),n(3.46),n(4.33)];
+        if (type==='interpolated') return [n(.42),v(.83),n(1.29),n(2.16),v(2.57),n(3.03),n(3.90),v(4.31),n(4.77)];
+        if (type==='ront') return [n(.48),v(.79),n(2.22),n(3.09),n(3.96),n(4.83)];
+        return [n(.48),n(1.35),n(2.22),n(3.09),n(3.96),n(4.83)];
+      }
+      function buildLeadPath(type, lead) {
+        const x0=108, plotWidth=1062, seconds=5.25, pxPerMv=52;
+        const beats=rhythmSchedule(type);
+        const profile=leadProfiles[lead];
+        const points=[];
+        for(let i=0;i<=plotWidth;i+=1.5){
+          const t=(i/plotWidth)*seconds;
+          let mv=.010*Math.sin(2*Math.PI*t/4.8+profile.phase)
+               + .0035*Math.sin(2*Math.PI*t*17.3+profile.phase)
+               + .0025*Math.sin(2*Math.PI*t*31.1+profile.phase*.7);
+          for(const beat of beats){
+            const dt=t-beat.t;
+            if(beat.kind==='N' && dt>-.34 && dt<.56) mv+=sinusWave(dt,lead);
+            if(beat.kind==='V' && dt>-.13 && dt<.66) mv+=pvcWave(dt,lead);
+          }
+          points.push([x0+i, profile.baseline-mv*pxPerMv]);
+        }
+        return points.map((pt,i)=>`${i?'L':'M'} ${pt[0].toFixed(1)} ${pt[1].toFixed(1)}`).join(' ');
+      }
+      function animateEcg() {
+        if (animationFrame) cancelAnimationFrame(animationFrame);
+        revealRect.setAttribute('width','0');
+        const lengths=Object.fromEntries(Object.entries(ecgPaths).map(([lead,path])=>[lead,path.getTotalLength()]));
+        const drawDuration=7200;
+        const holdDuration=700;
+        const cycle=drawDuration+holdDuration;
+        const start=performance.now();
+        const tick=now=>{
+          const elapsed=Math.max(0,(now-start)%cycle);
+          const fraction=Math.min(1,elapsed/drawDuration);
+          const x=108+1062*fraction;
+          revealRect.setAttribute('width',String(1062*fraction));
+          sweep.setAttribute('x1',x); sweep.setAttribute('x2',x);
+          Object.entries(ecgPaths).forEach(([lead,path])=>{
+            const p=path.getPointAtLength(lengths[lead]*fraction);
+            ecgCursors[lead].setAttribute('cx',p.x);
+            ecgCursors[lead].setAttribute('cy',p.y);
+          });
+          const visible=elapsed<drawDuration;
+          sweep.style.opacity=visible?'1':'0';
+          Object.values(ecgCursors).forEach(c=>c.style.opacity=visible?'1':'0');
+          animationFrame=requestAnimationFrame(tick);
+        };
+        animationFrame=requestAnimationFrame(tick);
+      }
+      function renderEcg(type) {
+        currentPattern=type;
+        Object.keys(ecgPaths).forEach(lead=>{
+          const d=buildLeadPath(type,lead);
+          ecgPaths[lead].setAttribute('d',d);
+        });
+        patternTitle.textContent=patternNames[type];
+        renderEcgInfo(type);
+        requestAnimationFrame(animateEcg);
+      }
+      function renderEcgInfo(type) {
+        document.getElementById('ecgInfo').innerHTML=patternInfo[type];
+      }
+      document.getElementById('ecgButtons').addEventListener('click',e=>{
+        const btn=e.target.closest('[data-pattern]');
+        if(!btn)return;
+        document.querySelectorAll('[data-pattern]').forEach(b=>b.classList.toggle('active',b===btn));
+        renderEcg(btn.dataset.pattern);
+      });
+      document.getElementById('ecgReplay').addEventListener('click',()=>animateEcg());
+      renderEcg('isolated');
+
+      document.querySelectorAll('[data-mech]').forEach(btn => btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-mech]').forEach(b=>b.classList.toggle('active', b===btn));
+        document.querySelectorAll('.mechanism-panel').forEach(p=>p.classList.toggle('active', p.id===`mech-${btn.dataset.mech}`));
+      }));
+
+      // Burden calculator
+      ['monitorHours','avgHr','pvcCount','totalBeatsOverride'].forEach(id => document.getElementById(id).addEventListener('input', updateBurden));
+      function fmt(n){ return new Intl.NumberFormat('ka-GE',{maximumFractionDigits:1}).format(n); }
+      function updateBurden(){
+        const hours=Math.max(1,Number(document.getElementById('monitorHours').value)||0);
+        const hr=Math.max(0,Number(document.getElementById('avgHr').value)||0);
+        const pvc=Math.max(0,Number(document.getElementById('pvcCount').value)||0);
+        const override=Math.max(0,Number(document.getElementById('totalBeatsOverride').value)||0);
+        const total=override || hours*60*hr;
+        const burden=total>0 ? pvc/total*100 : 0;
+        const perDay=hours>0 ? pvc/hours*24 : 0;
+        document.getElementById('burdenValue').textContent=`${burden.toFixed(2)}%`;
+        document.getElementById('burdenDetail').textContent=
+          `გულის შეკუმშვათა ჯამური რაოდენობა: ${fmt(total)} · 24 სთ-ის განმავლობაში: ${fmt(perDay)} პარკუჭოვანი ექსტრასისტოლა`;
+        document.getElementById('threshold10').classList.toggle('hit',burden>10);
+        document.getElementById('threshold10k').classList.toggle('hit',perDay>10000);
+        document.getElementById('threshold20k').classList.toggle('hit',perDay>20000);
+      }
+      updateBurden();
+
+      // Red flags
+      document.getElementById('redFlagList').addEventListener('change', updateRedFlags);
+      function updateRedFlags(){
+        const count=document.querySelectorAll('#redFlagList input:checked').length;
+        const status=document.getElementById('redFlagStatus');
+        status.classList.toggle('alert',count>0);
+        status.innerHTML=count>0
+          ? `<span>!</span><span>${count} წითელი ალამი — რეფერალი კარდიოლოგთან</span>`
+          : '<span>●</span><span>წითელი ალამი არ არის მონიშნული</span>';
+        document.getElementById('redFlagText').textContent=count>0
+          ? 'გადაუდებელი შეფასება, რომელიც უნდა მოიცავდეს სტრუქტურულ, იშემიის, მემკვიდრეობითი ფაქტორების ან ელექტროფიზიოლოგიურ კვლევას.'
+          : 'განაგრძეთ სტანდარტული შეფასება: ეკგ, ლაბორატორია, Holter და ექოკარდიოგრაფია კლინიკური საჭიროების მიხედვით.';
+      }
+      updateRedFlags();
+
+      // Management learning pathway
+      document.getElementById('buildPlan').addEventListener('click', () => {
+        const symptom=document.getElementById('symptomSelect').value;
+        const structural=document.getElementById('structureSelect').value;
+        const lv=document.getElementById('lvSelect').value;
+        const burden=document.getElementById('burdenSelect').value;
+        const first=document.getElementById('firstLineSelect').value;
+        const lines=[];
+        const add=(title,body,kind='')=>lines.push(`<div class="callout ${kind}"><strong>${title}</strong><br>${body}</div>`);
+        add('საწყისი ნაბიჯი','შექცევადი მაპროვოცირებელი ფაქტორების იდენტიფიკაცია და მართვა; ტვირთის და მარცხენა პარკუჭის ფუნქციის რაოდენობრივი შეფასება.');
+        if(structural==='abnormal'||lv==='reduced') {
+          add('შეზღუდვა','მხოლოდ პარკუჭოვანი ექსტრასისტოლიის სამკურნალოდ არ გამოიყენოთ კლასი I ნატრიუმის-არხის ბლოკერი. მარცხენა პარკუჭის განდევნის ფრაქციის დაქვეითების შემთხვევაში d-სოტალოლი ზრდის ლეტალობის რისკს.','danger');
+        }
+        if(symptom==='none'&&burden==='low'&&structural==='normal'&&lv==='normal') {
+          add('სავარაუდო ჩარევა','ანტიარითმიული თერაპია არ არის საჭირო.','success');
+        }
+        if(symptom==='mild') add('სიმპტომების მართვა','კოფეინის, ალკოჰოლის ანდა სხვა სტიმულატორების შემცირება; ელექტროლიტური და ფარისებრი ჯირკვლის ფუნქციის დარღვევების კორექცია.','success');
+        if(symptom==='significant'&&structural==='normal'&&lv==='normal') add('პირველი რიგი','განიხილება ბეტა-ბლოკერი ან კალციუმის არხის არადოჰოდროპირიდინული ბლოკერი; ზომიერი ეფექტურობა, დაბალი რისკი.');
+        if(first==='failed'&&structural==='normal'&&lv==='normal') add('რეფრაქტერული სიმპტომები','შეიძლება განიხილებოდეს ფლეკაინიდი, პროპაფენონი ან სოტალოლი; ფარმაკოთერაპიის მიმართ რეზისტენტობის ან აუტანლობის შემთხვევაში მაღალეფექტურია კათეტერული აბლაცია.','warning');
+        if(burden==='high'&&lv==='reduced') add('ეჭვი პარკუჭოვანი ექსტრასისტოლიით ინდუცირებულ კარდიომიოპათიაზე','კათეტერულიი აბლაცია. ექტოპიის დათრგუნვის შემდგომ შესაძელებელია მარცხენა პარკუჭის ფუნქციის ნორმალიზება.','warning');
+        if(burden==='high'&&lv==='normal'&&symptom==='none') add('უსიმპტომო მიმდინარეობა, მაღალი ტვირთი','შეაფასეთ რისკი. თუ არ მკურნალობს, ყოველწლიურად აწარმოეთ პერიოდული ექოკარდიოგრაფია და ჰოტერის მონიტორირება.');
+        add('მთავარი პრინციპი','უმკურნალეთ სიმპტომებს ანდა პარკუჭის დისფუნქციას.','danger');
+        document.getElementById('managementOutput').innerHTML=lines.join('');
+      });
+
+      // Quiz
+      const questions=[
+        {question:'რომელი ეკგ ნიშანია ტიპური პარკუჭოვანი ექსტრასისტოლისთვის?',options:['ვიწრო QRS კომპლექსი წინმსწრები P კბილით','ნაადრევი ფართო QRS კომპლექსი წინმსწრები P კბილის გარეშე','PR ინტერვალის გახანგრძლივება','QT ინტერვალის შემოკლება'],correct:1,why:'პარკუჭოვანი ექსტრასისტოლისთვის დამახასიათებელია ნაადრევი, ფართო (≥120 ms) QRS კომპლექსი, წინმსწრები P კბილის გარეშე.'},
+        {question:'რას არის ბიგემინია?',options:['ალორითმია, როდესაც ყოველი მეორე კომპლექსი არის პარკუჭოვანი ექსტრასისტოლა','ალორითმია, როდესაც ყოველი მესამე კომპლექსი არის პარკუჭოვანი ექსტრასისტოლა','ორი თანმიმდევრული პარკუჭოვანი ექსტრასისტოლა','ორ ნორმალურ კომპლექსს შორის "ჩამჯდარი" პარკუჭოვანი ექსტრასისტოლა კომპენსაციური პაუზის გარეშე'],correct:0,why:'ბიგემინია არის ალორითმიის ტიპი, როდესაც ყოველი მეორე კომპლექსი არის პარკუჭოვანი ექსტრასისტოლა.'},
+        {question:'QRS კომპლექსის LBBB მორფოლოგია და ელექტრული ღერძის ქვედა ორიენტაცია მიუთითებს',options:['მარჯვენა პარკუჭის გამომტან ტრაქტში ლოკალიზებულ ექტოპიაზე','მარცხენა წინაგულში ლოკალიზებულ ექტოპიურ კერაზე','ატრიოვენტრიკულურ კვანძში ლოკალიზებულ ექტოპიურ კერაზე','ნაწიბუროვან პარკუჭოვან ტაქიკარდიაზე'],correct:0,why:'ეს მიუთითებს მარჯვენა პარკუჭის გამომტან ტრაქტში ლოკალიზებულ ექტოპიის კერაზე.'},
+        {question:'პარკუჭოვანი ექსტრასისტოლიის ტვირთის რომელი ზღურბლი არის ასოცირებული ექსტრასისტოლიით ინდუცირებულ კარდიომიოპათიასთან?',options:['>1%','>3%','>10%','მხოლოდ >50%'],correct:2,why:'>10% ან >10,000–20,000 პარკუჭოვანი ექსტრასისტოლა/დღე.'},
+        {question:'რომელი კვლევა განსაზღვრავს პარკუჭოვანი ექსტრასისტოლიის ტვირთს?',options:['მხოლოდ მოსვენების ელექტროკარდიოგრაფია','24-საათიანი Holter ან უფრო ხანგრძლივი მონიტორინგი','მხოლოდ გულმკერდის რენტგენოგრაფია','მხოლოდ ტროპონინის კონცენტრაცია'],correct:1,why:'ამბულატორიული მონიტორინგი განსაზღვრავს burden-ს, მორფოლოგიასა და კომპლექსურობას.'},
+        {question:'გულის სტრუქტურული დაავადების გარეშე განვითარებული სიმპტომური პარკუჭოვანი ექსტრასისტოლიის მართვის პირველი რიგის თერაპიისთვის გამოიყენება',options:['მხოლოდ ამიოდარონი','ბეტა-ბლოკერი ან კალციუმის არხის არადიჰიდროპირიდინული ბლოკერი','ფლეკაინიდი, მიოკარდიუმის ინფარქტის შემდეგ','მხოლოდ დიგოქსინი'],correct:1,why:'პირველი რიგის თერაპიული აგენტია ბეტა-ბლოკერი ან კალციუმის არხის არადიჰიდროპირიდინული ბლოკერი.'},
+        {question:'CAST-ის მთავარი შედეგი არის',options:['პარკუჭოვანი ექსტრასისტოლიის კუპირება ყოველთვის ამცირებს სიკვდილიანობას','კლასი I ანტიარითმულმა პრეპარატებმა დათრგუნეს ექტოპია, მაგრამ გაზარდეს სიკვდილიანობა ინფარქტის შემდეგ','პარკუჭოვანი ექსტრასისტოლია ყოველთვის საჭიროებს აბლაციას','ამიოდარონს არ აქვს ტოქსიკური ეფექტი'],correct:1,why:'პარკუჭოვანი ექტოპიის კუპირება არ ნიშნავს უკეთეს კლინიკურ შედეგს.'},
+        {question:'ჩამოთვლილთაგან რომელი მიეკუთვნება სპეციალისტთან რეფერალის წითელ ალმებს?',options:['ნორმალური ექოკარდიოგრაფიული მონაცემები, დაბალი ტვირთი და უსიმპტომო მიმდინარეობა','სინკოპე','ახალგაზრდა ასაკი','მასტიმულირებელი ტრიგერის (მაგ., კოფეინი) მიღების შემდეგ ერთეული პარკუჭოვანი ექსტრასისტოლის აღმოცენება'],correct:1,why:'სინკოპე არის კარდიოლოგთან რეფერალის წითელი ალამი.'},
+        {question:'რას ნიშნავს ინტერპოლირებული პარკუჭოვანი ექსტრასისტოლა?',options:['სინუსური კომპლექსის T კბილზე "დამჯდარი" პარკუჭოვანი ექსტრასისტოლა','ორ სინუსურ კომპლექსს შორის "ჩამჯდარი" პარკუჭოვანი ექსტრასისტოლა კომპენსაციური პაუზის გარეშე','ორი თანმიმდევრული პარკუჭოვანი ექსტრასისტოლა','ალორითმია, როდესაც ყოველი მესამე არის პარკუჭოვანი ექსტრასისტოლა'],correct:1,why:'ინტერპოლირებული პარკუჭოვანი ექსტრასისტოლა არის ორ სინუსურ კომპლექსს შორის "ჩამჯდარი" პარკუჭოვანი ექსტრასისტოლა კომპენსაციური პაუზის გარეშე.'},
+        {question:'სტრუქტურულად ნორმალურ გულში აღმოცენებული უსიმპტომო და დაბალი ტვირთის პარკუჭოვანი ექსტრასისტოლიის შემთხვევაში რეკომენდებულია',options:['რუტინული თერაპია კლასი I ანტიარითმიული მედიკამენტით','დაუყოვნებლივი აბლაცია ყველა შემთხვევაში','დაკვირვება','პროფილაქტიკური ამიოდარონი'],correct:2,why:'სტრუქტურულად ნორმალურ გულში აღმოცენებული უსიმპტომო და დაბალი ტვირთის პარკუჭოვანი ექსტრასისტოლიის შემთხვევაში არ არის საჭირო ანტიარითმული თერაპია.'}
+      ];
+      let quizAnswers=JSON.parse(localStorage.getItem('vpb-quiz-v2')||'{}');
+      function renderQuiz(){
+        const c=document.getElementById('quizContainer');
+        c.innerHTML=questions.map((q,qi)=>{
+          const selected=quizAnswers[qi];
+          const options=q.options.map((o,oi)=>{
+            let cls='quiz-option';
+            if(selected!==undefined){ if(oi===q.correct)cls+=' correct'; else if(oi===selected)cls+=' incorrect'; }
+            return `<button class="${cls}" data-q="${qi}" data-o="${oi}" ${selected!==undefined?'disabled':''}>${String.fromCharCode(65+oi)}. ${o}</button>`;
+          }).join('');
+          const fb=selected===undefined?'':q.why;
+          return `<div class="quiz-card"><strong>${qi+1}. ${q.question}</strong><div class="quiz-options">${options}</div><div class="quiz-feedback">${fb}</div></div>`;
+        }).join('');
+        updateScore();
+      }
+      document.getElementById('quizContainer').addEventListener('click',e=>{
+        const b=e.target.closest('[data-q]'); if(!b)return;
+        quizAnswers[Number(b.dataset.q)]=Number(b.dataset.o);
+        localStorage.setItem('vpb-quiz-v2',JSON.stringify(quizAnswers));
+        renderQuiz();
+      });
+      function updateScore(){
+        const answered=Object.keys(quizAnswers).length;
+        const score=questions.reduce((s,q,i)=>s+(quizAnswers[i]===q.correct?1:0),0);
+        document.getElementById('scoreText').textContent=`${score}/${questions.length}`;
+        document.getElementById('scoreRing').style.setProperty('--score',String(score/questions.length*100));
+        const msg=answered<questions.length
+          ? `პასუხია ${answered}/${questions.length}`
+          : score>=9 ? 'შესანიშნავი შედეგი'
+          : score>=7 ? 'კარგი საფუძველი — გადახედეთ შეცდომებს'
+          : 'გაიმეორეთ ძირითადი სექციები';
+        document.getElementById('scoreMessage').textContent=msg;
+        document.getElementById('scoreSub').textContent=answered===questions.length?'შედეგი ინახება ამ ბრაუზერში.':'';
+      }
+      document.getElementById('resetQuiz').addEventListener('click',()=>{quizAnswers={};localStorage.removeItem('vpb-quiz-v2');renderQuiz();});
+      document.getElementById('exportQuiz').addEventListener('click',()=>{
+        const rows=[['კითხვა','არჩეული პასუხი','სწორი პასუხი','სწორია']];
+        questions.forEach((q,i)=>{const s=quizAnswers[i];rows.push([q.question,s===undefined?'პასუხი არ არის':q.options[s],q.options[q.correct],s===q.correct?'კი':'არა']);});
+        downloadBlob('﻿'+rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(',')).join('\n'),'VPB_PVC_ქვიზის_შედეგი.csv','text/csv;charset=utf-8');
+      });
+      renderQuiz();
+
+      // Notebook
+      const notes=document.getElementById('studentNotes');
+      notes.value=localStorage.getItem('vpb-notes')||'';
+      document.getElementById('saveNotes').addEventListener('click',e=>{e.preventDefault();localStorage.setItem('vpb-notes',notes.value);toast('ჩანაწერები შენახულია');});
+      document.getElementById('clearNotes').addEventListener('click',e=>{e.preventDefault();notes.value='';localStorage.removeItem('vpb-notes');toast('ჩანაწერები გასუფთავდა');});
+      document.getElementById('downloadNotes').addEventListener('click',e=>{e.preventDefault();downloadBlob(notes.value||'','VPB_PVC_student_notes.txt','text/plain;charset=utf-8');});
+      function downloadBlob(content,name,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500);}
+
+      window.addEventListener('beforeunload',()=>cancelAnimationFrame(animationFrame));
+    })();
+  </script>
+</body>
+</html>
