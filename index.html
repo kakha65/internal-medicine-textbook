@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#8f1724" />
+
+  <title>კარდიოლოგია | ციფრული სახელმძღვანელო</title>
+  <meta
+    name="description"
+    content="კარდიოლოგიის ინტერაქტიული ციფრული სახელმძღვანელო სტუდენტებისთვის."
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="page-overlay" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="კარდიოლოგიის მთავარი გვერდი">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" role="img">
+          <path d="M32 54S7 40 7 20.8C7 10.5 19.5 5.5 27.2 13.3L32 18l4.8-4.7C44.5 5.5 57 10.5 57 20.8 57 40 32 54 32 54Z"/>
+          <path class="pulse" d="M13 31h11l3.2-8.5 5.4 18.5 4-11 2.5 5H51"/>
+        </svg>
+      </span>
+
+      <span class="brand-copy">
+        <strong>კარდიოლოგია</strong>
+        <small>ინტერაქციული ციფრული სახელმძღვანელო</small>
+      </span>
+    </a>
+
+    <nav class="top-actions" aria-label="მთავარი ნავიგაცია">
+      <a class="nav-btn nav-btn--ghost" href="#topics">
+        <span aria-hidden="true">⌂</span>
+        თემები
+      </a>
+
+      <a class="nav-btn" href="../index.html">
+        <span aria-hidden="true">←</span>
+        სახელმძღვანელო
+      </a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">შინაგანი მედიცინა</p>
+
+        <h1 id="page-title">კარდიოლოგია</h1>
+
+        <div class="title-rule" aria-hidden="true"></div>
+
+        <p class="hero-kicker">მტკიცებულებებზე დაფუძნებული რესურსები, ალგორითმები, კალკულატორები და სხვა ინტერაქციული საშუალებები ერთ სივრცეში</p>
+
+        <p class="hero-description">
+          </p>
+
+        <div class="hero-stats" aria-label="სახელმძღვანელოს მოკლე ინფორმაცია">
+          <span><strong id="topicCount">26</strong> თემა</span>
+          <span>ინტერაქციული დიზაინი</span>
+          <span></span>
+        </div>
+      </div>
+
+      <aside class="hero-quote" aria-label="ციტატა">
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <p>2026</p>
+        <span class="quote-line" aria-hidden="true"></span>
+      </aside>
+    </section>
+
+    <section class="controls" aria-label="თემების ძებნა">
+      <label class="search-box" for="topicSearch">
+        <span class="search-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="6.5"></circle>
+            <path d="m16 16 4.2 4.2"></path>
+          </svg>
+        </span>
+
+        <input
+          id="topicSearch"
+          type="search"
+          autocomplete="off"
+          placeholder="მოძებნეთ თემა: ინფარქტი, AF, ჰიპერტენზია..."
+        />
+
+        <kbd>Ctrl K</kbd>
+      </label>
+
+      <div class="admin-toolbar">
+        <button
+          id="addTopicButton"
+          class="admin-add-btn"
+          type="button"
+          aria-label="ახალი თემის დამატება"
+        >
+          <span class="admin-add-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </span>
+
+          <span class="admin-add-copy">
+            <strong>ახალი თავის დამატება</strong>
+            <small>დაცულია ავტორიზაციით</small>
+          </span>
+
+          <span class="admin-badge">
+            <span class="admin-dot" aria-hidden="true"></span>
+            ADMIN
+          </span>
+
+          <span class="admin-chevron" aria-hidden="true">→</span>
+        </button>
+
+        <p class="admin-note">
+        </p>
+      </div>
+    </section>
+
+    <section id="topics" class="topics-section" aria-labelledby="topics-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-eyebrow">სასწავლო მოდულები</p>
+          <h2 id="topics-title">კარდიოლოგია</h2>
+        </div>
+
+        <p id="resultsLabel" class="results-label" aria-live="polite">26 თემა</p>
+      </div>
+
+      <div class="topic-grid" id="topicGrid">
+        <a class="topic-card"
+                   href="chapters/arrhythmias-antiarrhythmic-drugs/"
+                   data-search="არითმიები ანტიარითმული მედიკამენტები antiarrhythmic drugs vaughan williams">
+                  <span class="card-index">01</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>ზოგადი მიმოხილვა</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-emergency-management/"
+                   data-search="არითმიები გადაუდებელი მართვა emergency arrhythmia management acute">
+                  <span class="card-index">02</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>ანტიარითმული მედიკამენტები</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-ectopic-supraventricular/"
+                   data-search="არითმიები ექტოპიური სუპრავენტრიკულური arrhythmias ectopic supraventricular">
+                  <span class="card-index">03</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>გადუადებელი მართვა</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-wpw-syndrome/"
+                   data-search="არითმიები ვოლფ პარკინსონ უაიტი WPW Wolff Parkinson White preexcitation">
+                  <span class="card-index">04</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>ექტოპიური სუპრავენტრიკულური ართმიები</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-overview/"
+                   data-search="არითმიები ზოგადი მიმოხილვა arrhythmias overview rhythm">
+                  <span class="card-index">05</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>ვოლფ-პარკინსონ უაიტის სინდრომი</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-ventricular-fibrillation/"
+                   data-search="არითმიები პარკუჭთა ფიბრილაცია ventricular fibrillation VF">
+                  <span class="card-index">06</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>პარკუჭთა ფიბრილაცია</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-premature-ventricular-contractions/"
+                   data-search="არითმიები პარკუჭოვანი ექსტრასისტოლა PVC premature ventricular contractions extrasystole">
+                  <span class="card-index">07</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>პარკუჭოვანი ექსტრასისტოლა</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-ventricular-tachycardia/"
+                   data-search="არითმიები პარკუჭოვანი ტაქიკარდია ventricular tachycardia VT">
+                  <span class="card-index">08</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>პარკუჭოვანი ტაქიკარდია</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-paroxysmal-supraventricular-tachycardia/"
+                   data-search="არითმიები პაროქსიზმული სუპრავენტრიკულური ტაქიკარდიები PSVT SVT">
+                  <span class="card-index">09</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>პაროქსიზმული სუპრავენტრიკულური ტაქიკარდიები</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-sick-sinus-syndrome/"
+                   data-search="არითმიები სინუსის კვანძის სისუსტის სინდრომი sick sinus syndrome SSS">
+                  <span class="card-index">10</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>სინუსის კვანძის სისუსტის სინდრომი</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-atrial-flutter/"
+                   data-search="არითმიები წინაგულთა თრთოლვა atrial flutter AFL">
+                  <span class="card-index">11</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>წინაგულთა თრთოლვა</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-atrial-fibrillation/"
+                   data-search="არითმიები წინაგულთა ფიბრილაცია atrial fibrillation AF">
+                  <span class="card-index">12</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>წინაგულთა ფიბრილაცია</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/arrhythmias-torsades-de-pointes/"
+                   data-search="არითმიები torsades de pointes long QT polymorphic ventricular tachycardia">
+                  <span class="card-index">13</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>არითმიები</strong>
+                    <small>Torsades de Pointes</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/blocks-atrioventricular/"
+                   data-search="ბლოკები პირველი მეორე მესამე ხარისხის ატრიოვენტრიკულური AV block first second third degree">
+                  <span class="card-index">14</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>ბლოკები</strong>
+                    <small>პირველი, მეორე, მესამე ხარისხის ატრიოვენტრიკულური ბლოკები</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/blocks-bundle-branch-fascicular/"
+                   data-search="ბლოკები ჰისის კონის ფეხების ფასციკულური bundle branch fascicular LBBB RBBB">
+                  <span class="card-index">15</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>ბლოკები</strong>
+                    <small>ჰისის კონის ფეხების და ფასციკულური ბლოკები</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/heart-failure-esc-2026/"
+                   data-search="გულის უკმარისობა ESC 2026 heart failure HF HFrEF HFpEF">
+                  <span class="card-index">16</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>გულის უკმარისობა</strong>
+                    <small>Heart Failure. ESC 2026</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/infective-endocarditis/"
+                   data-search="ინფექციური ენდოკარდიტი infective endocarditis IE">
+                  <span class="card-index">17</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>ინფექციური ენდოკარდიტი</strong>
+                    <small>Infective Endocarditis</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/cardiomyopathies/"
+                   data-search="კარდიომიოპათიები cardiomyopathies dilated hypertrophic restrictive DCM HCM">
+                  <span class="card-index">18</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>კარდიომიოპათიები</strong>
+                    <small>დილატაციური, ჰიპერტროფული, რესტრიქციული და სხვა კარდიომიოპათიები</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/coronary-syndromes-overview/"
+                   data-search="კორონარული სინდრომები ზოგადი მიმოხილვა coronary syndromes ACS chronic coronary syndrome">
+                  <span class="card-index">19</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>კორონარული სინდრომები</strong>
+                    <small>ზოგადი მიმოხილვა</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/coronary-syndromes-right-ventricular-infarction/"
+                   data-search="კორონარული სინდრომები მარჯვენა პარკუჭის ინფარქტი right ventricular infarction RVMI">
+                  <span class="card-index">20</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>კორონარული სინდრომები</strong>
+                    <small>მარჯვენა პარკუჭის ინფარქტი</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/coronary-syndromes-mi-5th-universal-definition-2026/"
+                   data-search="კორონარული სინდრომები მიოკარდიუმის ინფარქტი მე-5 უნივერსალური განსაზღვრება 2026 myocardial infarction fifth universal definition">
+                  <span class="card-index">21</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>კორონარული სინდრომები </strong>
+                    <small>მიოკარდიუმის ინფარქტი - მე-5 უნივერსალური განსაზღვრება 2026</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/myocarditis/"
+                   data-search="მიოკარდიტი myocarditis">
+                  <span class="card-index">22</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>მიოკარდიტი</strong>
+                    <small>Myocarditis</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/pericarditis/"
+                   data-search="პერიკარდიტი pericarditis">
+                  <span class="card-index">23</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>პერიკარდიტი</strong>
+                    <small>Pericarditis</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/pulmonary-embolism/"
+                   data-search="პულმონური ემბოლიზმი pulmonary embolism PE">
+                  <span class="card-index">24</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>პულმონური ემბოლიზმი</strong>
+                    <small>Pulmonary Embolism</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/valvular-aortic-stenosis-regurgitation/"
+                   data-search="სარქვლოვანი პათოლოგიები აორტული სტენოზი რეგურგიტაცია aortic stenosis regurgitation AS AR">
+                  <span class="card-index">25</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>სარქვლოვანი პათოლოგიები</strong>
+                    <small>აორტული სტენოზი/რეგურგიტაცია</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+
+        <a class="topic-card"
+                   href="chapters/valvular-mitral-stenosis-regurgitation/"
+                   data-search="სარქვლოვანი პათოლოგიები მიტრალური სტენოზი რეგურგიტაცია mitral stenosis regurgitation MS MR">
+                  <span class="card-index">26</span>
+                  <span class="icon-shell" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <path d="M33 54S12 42 12 25c0-8 9.7-12.7 16-6.6L33 23l5-4.6C44.3 12.3 54 17 54 25c0 17-21 29-21 29Z"/>
+                      <path class="line" d="M15 33h10l3-8 5 18 4-12 3 6h10"/>
+                    </svg>
+                  </span>
+                  <span class="card-copy">
+                    <strong>სარქვლოვანი პათოლოგიები</strong>
+                    <small>მიტრალური სტენოზი/რეგურგიტაცია</small>
+                    <span>გახსნა</span>
+                  </span>
+                  <span class="card-arrow" aria-hidden="true">→</span>
+                </a>
+      </div>
+
+      <div id="emptyState" class="empty-state" hidden>
+        <div class="empty-icon" aria-hidden="true">⌕</div>
+        <h3>თემა ვერ მოიძებნა</h3>
+        <p>შეცვალეთ საძიებო სიტყვა ან აირჩიეთ სხვა კატეგორია.</p>
+        <button id="resetSearch" type="button">ყველა თემის ჩვენება</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-brand">
+      <span class="mini-pulse" aria-hidden="true"></span>
+      <div>
+        <strong></strong>
+        <small></small>
+      </div>
+    </div>
+
+    <p></p>
+
+    <div class="footer-note">
+      <span class="heart-dot" aria-hidden="true"></span>
+      <div>
+        <strong>კარდიოლოგია 2026</strong>
+        <small>ავტორი: პროფ. კახაბერ ჭელიძე, M.D.<br>რედაქტორი: ნათია ეფრემიძე, M.D.</br></small>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
